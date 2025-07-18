@@ -1,0 +1,17 @@
+includes:
+	- %currentWorkingDirectory%/editor.phpstan.neon
+
+parameters:
+	scanDirectories:
+		- %currentWorkingDirectory%/vendor
+
+	paths:
+		- %currentWorkingDirectory%/src
+		- %currentWorkingDirectory%/tests
+
+	tmpDir:
+		%currentWorkingDirectory%/temp/phpstan
+
+	level: 10
+
+	editorUrlTitle: '%%relFile%%:%%line%%'
