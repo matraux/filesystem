@@ -49,13 +49,14 @@
     }
   },
   "scripts": {
-    "codefixer": "\"vendor/bin/phpcbf\" --standard=\"ruleset.xml\" src/ tests/",
+    "codesniffer": "\"vendor/bin/phpcs\" --standard=\"ruleset.xml\" --ansi",
+    "codefixer": "\"vendor/bin/phpcbf\" --standard=\"ruleset.xml\" --ansi",
     "stan": "vendor/bin/phpstan analyse -c \"phpstan.neon\" --ansi",
     "test": "vendor/bin/tester -s -p php --colors 1 -C tests/",
     "finalize": [
-      "@composer codefixer --ansi",
-      "@composer stan --ansi",
-      "@composer test --ansi"
+      "@composer codefixer src/ tests/",
+      "@composer stan",
+      "@composer test"
     ]
   },
   "scripts-descriptions": {
