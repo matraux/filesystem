@@ -48,7 +48,7 @@ class Folder implements Stringable
 				return $this->root;
 			}
 
-					$root = null;
+			$root = null;
 
 			if (class_exists(InstalledVersions::class) && $path = InstalledVersions::getRootPackage()['install_path']) {
 				$root = (string) $path;
