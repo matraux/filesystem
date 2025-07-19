@@ -3,14 +3,11 @@
 namespace Matraux\FileSystem\Folder;
 
 use Composer\InstalledVersions;
-use Nette\SmartObject;
 use RuntimeException;
 use Stringable;
 
 class Folder implements Stringable
 {
-
-	use SmartObject;
 
 	protected const string Root = './';
 
@@ -39,16 +36,15 @@ class Folder implements Stringable
 	}
 
 	/** @var array<int,string> */
-	protected array $paths = [];
+	final protected array $paths = [];
 
-	private static string $root;
+	final protected bool $isAbsolute = false;
 
-	private bool $isAbsolute = false;
+	final protected string $path;
 
-	private ?string $printed = null;
-
-	final protected function __construct(protected string $path)
+	final protected function __construct(string $path)
 	{
+		$this->path = $path;
 	}
 
 	final public static function create(string|Stringable|null $path = self::Root): static
@@ -64,7 +60,7 @@ class Folder implements Stringable
 		return $clone;
 	}
 
-	private static function normalizePath(string $path): string
+	final protected static function normalizePath(string $path): string
 	{
 		/** @var array<string> $parts */
 		$parts = (array) preg_split('~[/\\\\]+~', $path);
@@ -81,71 +77,76 @@ class Folder implements Stringable
 		return empty($result) ? DIRECTORY_SEPARATOR : implode(DIRECTORY_SEPARATOR, $result) . DIRECTORY_SEPARATOR;
 	}
 
-	private static function getRoot(): string
-	{
-		if (isset(self::$root)) {
-			return self::$root;
-		}
+	final protected string $root {
+		get {
+			if (isset($this->root)) {
+				return $this->root;
+			}
 
-		$root = null;
+			$root = null;
 
-		if (class_exists(InstalledVersions::class) && $path = InstalledVersions::getRootPackage()['install_path']) {
-			$root = (string) $path;
-		} elseif ($path = getcwd()) {
-			$root = $path;
-		} else {
-			$debug = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+			if (class_exists(InstalledVersions::class) && $path = InstalledVersions::getRootPackage()['install_path']) {
+				$root = (string) $path;
+			} elseif ($path = getcwd()) {
+				$root = $path;
+			} else {
+				$debug = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
 
-			if ($path = end($debug)['file'] ?? null) {
-				$path = dirname($path);
+				if ($path = end($debug)['file'] ?? null) {
+					$path = dirname($path);
 
-				if (PHP_SAPI !== 'cli') {
-					$root = $path;
-				} else {
-					$filename = $_SERVER['SCRIPT_FILENAME'];
-					if (is_string($filename)) {
-						$script = dirname($filename);
-						$root = (string) preg_replace('~' . preg_quote($script, '~') . '$~', '', $path);
+					if (PHP_SAPI !== 'cli') {
+						$root = $path;
+					} else {
+						$filename = $_SERVER['SCRIPT_FILENAME'];
+						if (is_string($filename)) {
+							$script = dirname($filename);
+							$root = (string) preg_replace('~' . preg_quote($script, '~') . '$~', '', $path);
+						}
 					}
 				}
 			}
-		}
 
-		if (!$root) {
-			throw new RuntimeException('Can not obtain root directory.');
-		}
+			if (!$root) {
+				throw new RuntimeException('Can not obtain root directory.');
+			}
 
-		return self::$root = self::normalizePath($root);
+			return $this->root = self::normalizePath($root);
+		}
 	}
 
-	private function print(): string
-	{
-		$path = (string) $this->path;
+	final protected ?string $print {
+		get {
+			if(isset($this->print)) {
+				return $this->print;
+			}
 
-		if (!empty($this->paths)) {
-			$path .= DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $this->paths);
+			$path = $this->path;
+
+			if (!empty($this->paths)) {
+				$path .= DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $this->paths);
+			}
+
+			$path = self::normalizePath($path);
+
+			if ($this->isAbsolute && !str_starts_with($path, $this->root)) {
+				$path = self::normalizePath($this->root . DIRECTORY_SEPARATOR . $path);
+			} elseif (!$this->isAbsolute && str_starts_with($path, $this->root)) {
+				$path = self::normalizePath(str_replace($this->root, '', $path));
+			}
+
+			return $this->print = $path;
 		}
-
-		$path = self::normalizePath($path);
-		$root = self::getRoot();
-
-		if ($this->isAbsolute && !str_starts_with($path, $root)) {
-			$path = self::normalizePath($root . DIRECTORY_SEPARATOR . $path);
-		} elseif (!$this->isAbsolute && str_starts_with($path, $root)) {
-			$path = self::normalizePath(str_replace($root, '', $path));
-		}
-
-		return $path;
 	}
 
 	final public function __clone()
 	{
-		$this->printed = null;
+		$this->print = null;
 	}
 
 	final public function __toString(): string
 	{
-		return $this->printed ??= $this->print();
+		return (string) $this->print;
 	}
 
 }
