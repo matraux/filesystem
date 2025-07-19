@@ -42,48 +42,13 @@ class Folder implements Stringable
 
 	final protected string $path;
 
-	final protected function __construct(string $path)
-	{
-		$this->path = $path;
-	}
-
-	final public static function create(string|Stringable|null $path = self::Root): static
-	{
-		return new static((string) $path);
-	}
-
-	final public function addPath(string|Stringable $path): static
-	{
-		$clone = clone $this;
-		$clone->paths[] = (string) $path;
-
-		return $clone;
-	}
-
-	final protected static function normalizePath(string $path): string
-	{
-		/** @var array<string> $parts */
-		$parts = (array) preg_split('~[/\\\\]+~', $path);
-		$result = [];
-
-		foreach ($parts as $index => $part) {
-			if ($part === '..' && end($result) !== '.' && end($result) !== '..') {
-				array_pop($result);
-			} elseif ($index === 0 || (!empty($part) && $part !== '.')) {
-				$result[] = $part;
-			}
-		}
-
-		return empty($result) ? DIRECTORY_SEPARATOR : implode(DIRECTORY_SEPARATOR, $result) . DIRECTORY_SEPARATOR;
-	}
-
 	final protected string $root {
 		get {
 			if (isset($this->root)) {
 				return $this->root;
 			}
 
-			$root = null;
+					$root = null;
 
 			if (class_exists(InstalledVersions::class) && $path = InstalledVersions::getRootPackage()['install_path']) {
 				$root = (string) $path;
@@ -137,6 +102,41 @@ class Folder implements Stringable
 
 			return $this->print = $path;
 		}
+	}
+
+	final protected function __construct(string $path)
+	{
+		$this->path = $path;
+	}
+
+	final public static function create(string|Stringable|null $path = self::Root): static
+	{
+		return new static((string) $path);
+	}
+
+	final public function addPath(string|Stringable $path): static
+	{
+		$clone = clone $this;
+		$clone->paths[] = (string) $path;
+
+		return $clone;
+	}
+
+	final protected static function normalizePath(string $path): string
+	{
+		/** @var array<string> $parts */
+		$parts = (array) preg_split('~[/\\\\]+~', $path);
+		$result = [];
+
+		foreach ($parts as $index => $part) {
+			if ($part === '..' && end($result) !== '.' && end($result) !== '..') {
+				array_pop($result);
+			} elseif ($index === 0 || (!empty($part) && $part !== '.')) {
+				$result[] = $part;
+			}
+		}
+
+		return empty($result) ? DIRECTORY_SEPARATOR : implode(DIRECTORY_SEPARATOR, $result) . DIRECTORY_SEPARATOR;
 	}
 
 	final public function __clone()
