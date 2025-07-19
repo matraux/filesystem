@@ -8,6 +8,7 @@ use Tester\Dumper;
 use Tester\Environment;
 use Tester\Helpers;
 use Tracy\Debugger;
+use Nette\Neon\Neon;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -44,6 +45,12 @@ final class Bootstrap
 		Debugger::$maxDepth = 10;
 		Debugger::$maxLength = 1000;
 		Debugger::$logDirectory = self::Temp;
+
+		if (is_file($config = self::Root . 'editor.tracy.neon')) {
+			/** @var array<string,array<string,string>> $neon */
+			$neon = Neon::decodeFile($config);
+			Debugger::$editor = $neon['tracy']['editor'] ?? null;
+		}
 	}
 
 }
