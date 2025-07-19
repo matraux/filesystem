@@ -3,7 +3,7 @@
   "description": "File System for handling with files",
   "keywords": ["File System", "MATRAUX"],
   "type": "library",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "license": "MIT",
   "authors": [
     {
@@ -26,7 +26,8 @@
     "tracy/tracy": "^2.9",
     "nette/http": "^3.3",
     "psr/http-message": "1.1",
-    "contributte/qa": "^0.3.2"
+    "contributte/qa": "^0.3.2",
+    "nette/neon": "^3.4"
   },
   "autoload": {
     "psr-4": {
@@ -54,12 +55,12 @@
     "stan": "vendor/bin/phpstan analyse -c \"phpstan.neon\" --ansi",
     "test": "vendor/bin/tester -s -p php --colors 1 -C tests/",
     "finalize": [
-      "@composer codefixer src/ tests/",
       "@composer stan",
       "@composer test"
     ]
   },
   "scripts-descriptions": {
+    "codesniffer": "Run PHP Codesniffer. Usage: \"composer codesniffer {path to folder or file}\"",
     "codefixer": "Run PHP Codefixer. Usage: \"composer codefixer {path to folder or file}\"",
     "stan": "Run PHP Stan. Usage \"composer stan {path to folder or file}\"",
     "test": "Run PHP application tests",
