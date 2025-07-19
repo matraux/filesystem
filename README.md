@@ -1,4 +1,5 @@
 # Introduction
+[![View on GitLab](https://img.shields.io/badge/Primary%20Repo-GitLab-orange?logo=gitlab)](https://gitlab.com/matraux/filesystem)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/matraux/filesystem.svg)](https://packagist.org/packages/matraux/filesystem)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![PHP](https://img.shields.io/badge/PHP-8.4+-blue.svg)](https://php.net)
