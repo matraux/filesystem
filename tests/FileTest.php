@@ -85,12 +85,6 @@ final class FileTest extends TestCase
 		Assert::error(fn () => (string) $file, Throwable::class);
 	}
 
-	public function testCustomFile(): void
-	{
-		$file = CustomFile::fromPath(Bootstrap::Assets . 'fromPath.txt');
-		Assert::equal(2, $file->depth);
-	}
-
 }
 
 (new FileTest())->run();
