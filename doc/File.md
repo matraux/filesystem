@@ -3,9 +3,9 @@
 # File
 Basic usage
 ```php
-$file = File::fromPath('C:\Users\John\Webs\Resources\FileSystem\subFolder\test.txt');
+$file = File::fromPath('C:\Users\MATRAUX\Webs\Resources\FileSystem\subFolder\test.txt');
 
-echo $file; // "C:\Users\John\Webs\Resources\FileSystem\subFolder\test.txt"
+echo $file; // "C:\Users\MATRAUX\Webs\Resources\FileSystem\subFolder\test.txt"
 
 echo $file->name; // "test.txt"
 
@@ -13,7 +13,7 @@ echo $file->basename; // "test"
 
 echo $file->extension; // "txt"
 
-echo $file->path; // "C:\Users\John\Webs\Resources\FileSystem\subFolder"
+echo $file->path; // "C:\Users\MATRAUX\Webs\Resources\FileSystem\subFolder"
 
 echo $file->relativePath; // ".\subFolder"
 
@@ -34,7 +34,7 @@ $file->temporary = true; // File will be removed after PHP instance shutdown
 
 $file->name = 'xyz'; // Rename file to "xyz"
 
-$file->path = 'C:\Users\John\Webs\Resources\FileSystem\extraFolder'; // Move file from "subFolder" to "extraFolder"
+$file->path = 'C:\Users\MATRAUX\Webs\Resources\FileSystem\extraFolder'; // Move file from "subFolder" to "extraFolder"
 
 $file->basename = 'abcd'; // Rename file to "abcd.txt"
 
@@ -43,6 +43,7 @@ $file->extension = 'js'; // Change file extension to "js"
 
 Customization
 ```php
+use Matraux\FileSystem\File\File;
 
 /**
  * @property-read int $depth Nette SmartObject propery access
@@ -57,6 +58,6 @@ final class CustomFile extends File
 
 }
 
-$file = File::fromPath('C:\Users\John\Webs\Resources\FileSystem\subFolder\test.txt');
+$file = File::fromPath('C:\Users\MATRAUX\Webs\Resources\FileSystem\subFolder\test.txt');
 echo $file->depth; // 6
 ```

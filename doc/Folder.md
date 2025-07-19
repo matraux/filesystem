@@ -8,11 +8,11 @@ use Matraux\FileSystem\Folder\Folder;
 $folder = Folder::create();
 echo $folder; // ".\"
 
-echo $folder->absolute; // "C:\Users\John\Webs\Resources\FileSystem\"
+echo $folder->absolute; // "C:\Users\MATRAUX\Webs\Resources\FileSystem\"
 
 echo $folder->addPath('subFolder'); // ".\subFolder\"
 
-echo $folder->addPath('subFolder')->absolute; // "C:\Users\John\Webs\Resources\FileSystem\subFolder\"
+echo $folder->addPath('subFolder')->absolute; // "C:\Users\MATRAUX\Webs\Resources\FileSystem\subFolder\"
 ```
 
 Customization
@@ -25,17 +25,15 @@ use Matraux\FileSystem\Folder\Folder;
 final class CustomFolder extends Folder
 {
 
-	private const string Temp = self::Root . 'temp' . DIRECTORY_SEPARATOR;
+	protected const string Temp = self::Root . 'temp' . DIRECTORY_SEPARATOR;
 
-	/**
-	 * Nette SmartObject propery access
-	 */
-	protected function getTemp(): static
-	{
-		$clone = clone $this;
-		$clone->path = self::Temp;
+	public self $temp {
+		get {
+			$clone = clone $this;
+			$clone->path = self::Temp;
 
-		return $clone;
+			return $clone;
+		}
 	}
 
 }
@@ -44,9 +42,9 @@ $folder = CustomFolder::create();
 
 echo $folder->temp; // ".\temp\"
 
-echo $folder->temp->absolute; // "C:\Users\John\Webs\Resources\FileSystem\temp\"
+echo $folder->temp->absolute; // "C:\Users\MATRAUX\Webs\Resources\FileSystem\temp\"
 
 echo $folder->temp->addPath('subFolder'); // ".\temp\subFolder\"
 
-echo $folder->temp->addPath('subFolder')->absolute; // "C:\Users\John\Webs\Resources\FileSystem\temp\subFolder\"
+echo $folder->temp->addPath('subFolder')->absolute; // "C:\Users\MATRAUX\Webs\Resources\FileSystem\temp\subFolder\"
 ```
