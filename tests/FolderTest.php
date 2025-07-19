@@ -22,6 +22,19 @@ final class FolderTest extends TestCase
 		Assert::type(Folder::class, $folder);
 	}
 
+	public function testFolderAbsolute(): void
+	{
+		$folder = Folder::create(__DIR__);
+		Assert::equal(__DIR__ . DIRECTORY_SEPARATOR, (string) $folder->absolute);
+	}
+
+	public function testFolderRelative(): void
+	{
+		$folder = Folder::create(__DIR__);
+		Assert::equal(basename(__DIR__) . DIRECTORY_SEPARATOR, (string) $folder->relative);
+	}
+
+
 }
 
 (new FolderTest())->run();
