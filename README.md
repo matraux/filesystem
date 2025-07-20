@@ -1,8 +1,12 @@
 # Introduction
-[![View on GitLab](https://img.shields.io/badge/Primary%20Repo-GitLab-orange?logo=gitlab)](https://gitlab.com/matraux/filesystem)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/matraux/filesystem.svg)](https://packagist.org/packages/matraux/filesystem)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![PHP](https://img.shields.io/badge/PHP-8.4+-blue.svg)](https://php.net)
+[![Issues](https://img.shields.io/github/issues/matraux/filesystem)](https://github.com/matraux/filesystem/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/matraux/filesystem)](https://github.com/matraux/filesystem/commits)
+[![PHPStan](https://img.shields.io/badge/PHPStan-passing-brightgreen?logo=php&logoColor=white)](https://github.com/matraux/filesystem/actions/workflows/phpstan.yml)
+[![Tests](https://img.shields.io/badge/Tests-passing-brightgreen?logo=checkmarx&logoColor=white)](https://github.com/matraux/filesystem/actions/workflows/tests.yml)
+
 
 A PHP 8.4+ library that simplifies file and folder operations using an object-oriented API. Supports renaming, moving, streaming, and deletion with optional integration for PSR-7 and Nette\Http\FileUpload.
 
@@ -47,4 +51,4 @@ echo $folder->absolute; // "C:\Users\MATRAUX\Webs\Resources\FileSystem\backup"
 See [Development](./doc/Development.md) for debug, test instructions, static analysis, and coding standards.
 
 # Support
-For bug reports and feature requests, please use the [issue tracker](https://gitlab.com/matraux/filesystem/-/issues).
+For bug reports and feature requests, please use the [issue tracker](https://github.com/matraux/filesystem/issues).
