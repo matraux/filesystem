@@ -3,7 +3,7 @@
   "description": "File System for handling with files",
   "keywords": ["File System", "MATRAUX"],
   "type": "library",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "license": "MIT",
   "authors": [
     {
