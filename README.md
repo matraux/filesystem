@@ -3,6 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![PHP](https://img.shields.io/badge/PHP-8.4+-blue.svg)](https://php.net)
 [![Security Policy](https://img.shields.io/badge/Security-Policy-blue)](./.github/SECURITY.md)
+[![Contributing](https://img.shields.io/badge/Contributing-Disabled-lightgrey?logo=github)](CONTRIBUTING.md)
 [![Quality Assurance](https://img.shields.io/badge/QA-passing-brightgreen?logo=checkmarx&logoColor=white)](https://github.com/matraux/filesystem/actions/workflows/qa.yml)
 [![Issues](https://img.shields.io/github/issues/matraux/filesystem)](https://github.com/matraux/filesystem/issues)
 [![Last Commit](https://img.shields.io/github/last-commit/matraux/filesystem)](https://github.com/matraux/filesystem/commits)
