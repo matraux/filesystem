@@ -2,9 +2,10 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/matraux/filesystem.svg)](https://packagist.org/packages/matraux/filesystem)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![PHP](https://img.shields.io/badge/PHP-8.4+-blue.svg)](https://php.net)
+[![Security Policy](https://img.shields.io/badge/Security-Policy-blue)](./.github/SECURITY.md)
+[![Quality Assurance](https://img.shields.io/badge/QA-passing-brightgreen?logo=checkmarx&logoColor=white)](https://github.com/matraux/filesystem/actions/workflows/qa.yml)
 [![Issues](https://img.shields.io/github/issues/matraux/filesystem)](https://github.com/matraux/filesystem/issues)
 [![Last Commit](https://img.shields.io/github/last-commit/matraux/filesystem)](https://github.com/matraux/filesystem/commits)
-[![Quality Assurance](https://img.shields.io/badge/QA-passing-brightgreen?logo=checkmarx&logoColor=white)](https://github.com/matraux/filesystem/actions/workflows/qa.yml)
 
 
 A PHP 8.4+ library that simplifies file and folder operations using an object-oriented API. Supports renaming, moving, streaming, and deletion with optional integration for PSR-7 and Nette\Http\FileUpload.
@@ -33,7 +34,7 @@ composer require matraux/filesystem
 | 1.1.2 | PHP 8.4 | Quality Assurance
 
 # Usage
-See [File](./doc/File.md) for advance instruction.
+See [File](./docs/File.md) for advance instruction.
 ```php
 use Matraux\FileSystem\File\File;
 
@@ -41,7 +42,7 @@ $file = File::fromPath('C:\Users\MATRAUX\Webs\Resources\FileSystem\log.txt');
 echo $file->name;  // "log.txt"
 ```
 
-See [Folder](./doc/Folder.md) for advance instruction.
+See [Folder](./docs/Folder.md) for advance instruction.
 ```php
 use Matraux\FileSystem\Folder\Folder;
 
@@ -51,7 +52,7 @@ echo $folder->absolute; // "C:\Users\MATRAUX\Webs\Resources\FileSystem\backup"
 
 
 # Development
-See [Development](./doc/Development.md) for debug, test instructions, static analysis, and coding standards.
+See [Development](./docs/Development.md) for debug, test instructions, static analysis, and coding standards.
 
 
 # Support
