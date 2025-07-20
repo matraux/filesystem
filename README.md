@@ -4,11 +4,11 @@
 [![PHP](https://img.shields.io/badge/PHP-8.4+-blue.svg)](https://php.net)
 [![Issues](https://img.shields.io/github/issues/matraux/filesystem)](https://github.com/matraux/filesystem/issues)
 [![Last Commit](https://img.shields.io/github/last-commit/matraux/filesystem)](https://github.com/matraux/filesystem/commits)
-[![PHPStan](https://img.shields.io/badge/PHPStan-passing-brightgreen?logo=php&logoColor=white)](https://github.com/matraux/filesystem/actions/workflows/phpstan.yml)
-[![Tests](https://img.shields.io/badge/Tests-passing-brightgreen?logo=checkmarx&logoColor=white)](https://github.com/matraux/filesystem/actions/workflows/tests.yml)
+[![Quality Assurance](https://img.shields.io/badge/QA-passing-brightgreen?logo=checkmarx&logoColor=white)](https://github.com/matraux/filesystem/actions/workflows/qa.yml)
 
 
 A PHP 8.4+ library that simplifies file and folder operations using an object-oriented API. Supports renaming, moving, streaming, and deletion with optional integration for PSR-7 and Nette\Http\FileUpload.
+
 
 # Features
 - File and folder manipulation with fluent API
@@ -19,6 +19,7 @@ A PHP 8.4+ library that simplifies file and folder operations using an object-or
 - Nette FileUpload support `Nette\Http\FileUpload`
 - Easy extension via inheritance
 
+
 # Installation
 ```bash
 composer require matraux/filesystem
@@ -28,7 +29,8 @@ composer require matraux/filesystem
 |----|---|---
 | 1.0.0 | PHP 8.3 | Initial commit
 | 1.0.9 | PHP 8.3 | Cache optimization
-| 1.1.1 | PHP 8.4 | Property accessor PHP 8.4
+| 1.1.1 | PHP 8.4 | Property accessor
+| 1.1.2 | PHP 8.4 | Quality Assurance
 
 # Usage
 See [File](./doc/File.md) for advance instruction.
@@ -47,8 +49,10 @@ $folder = Folder::create()->addPath('backup');
 echo $folder->absolute; // "C:\Users\MATRAUX\Webs\Resources\FileSystem\backup"
 ```
 
+
 # Development
 See [Development](./doc/Development.md) for debug, test instructions, static analysis, and coding standards.
+
 
 # Support
 For bug reports and feature requests, please use the [issue tracker](https://github.com/matraux/filesystem/issues).

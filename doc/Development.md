@@ -1,7 +1,9 @@
 **[Back](../README.md)**
 
+
 # Development
 This package includes several development tools configured via Composer scripts.
+
 
 ## Composer scripts
 ```bash
@@ -12,12 +14,14 @@ composer test        # Run unit tests (Tester)
 composer finalize    # Run PHPStan and tests
 ```
 
+
 ## Tracy debugging
 Local IDE integration for Nette Tracy is supported via optional config files.
 - `editor.tracy.neon.dist` - template config for editor integrations
 - `editor.tracy.neon` - optional local override (copied from `.dist`)
 
 These files can be used to configure custom Tracy editor mapping.
+
 
 ## PHPStan Static analysis
 The project uses PHPStan for static analysis.
@@ -30,6 +34,7 @@ To run PHPStan:
 ```bash
 composer stan
 ```
+
 
 ## Tests
 To run all tests:
