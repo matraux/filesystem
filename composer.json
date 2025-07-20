@@ -53,17 +53,12 @@
     "codesniffer": "\"vendor/bin/phpcs\" --standard=\"ruleset.xml\" --ansi",
     "codefixer": "\"vendor/bin/phpcbf\" --standard=\"ruleset.xml\" --ansi",
     "stan": "vendor/bin/phpstan analyse -c \"phpstan.neon\" --ansi",
-    "test": "vendor/bin/tester -s -p php --colors 1 -C tests/",
-    "finalize": [
-      "@composer stan",
-      "@composer test"
-    ]
+    "test": "vendor/bin/tester -s -p php --colors 1 -C tests/"
   },
   "scripts-descriptions": {
     "codesniffer": "Run PHP Codesniffer. Usage: \"composer codesniffer {path to folder or file}\"",
     "codefixer": "Run PHP Codefixer. Usage: \"composer codefixer {path to folder or file}\"",
     "stan": "Run PHP Stan. Usage \"composer stan {path to folder or file}\"",
-    "test": "Run PHP application tests",
-    "finalize": "Run all scripts in order: codefixer, stan and test"
+    "test": "Run PHP application tests"
   }
 }
