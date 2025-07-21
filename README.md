@@ -1,18 +1,22 @@
-# Introduction
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/matraux/filesystem.svg)](https://packagist.org/packages/matraux/filesystem)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![PHP](https://img.shields.io/badge/PHP-8.4+-blue.svg)](https://php.net)
-[![Security Policy](https://img.shields.io/badge/Security-Policy-blue)](./.github/SECURITY.md)
-[![Contributing](https://img.shields.io/badge/Contributing-Disabled-lightgrey?logo=github)](CONTRIBUTING.md)
-[![QA Status](https://github.com/matraux/filesystem/actions/workflows/qa.yml/badge.svg)](https://github.com/matraux/filesystem/actions/workflows/qa.yml)
-[![Issues](https://img.shields.io/github/issues/matraux/filesystem)](https://github.com/matraux/filesystem/issues)
-[![Last Commit](https://img.shields.io/github/last-commit/matraux/filesystem)](https://github.com/matraux/filesystem/commits)
+# MATRAUX File System
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/matraux/filesystem.svg?logo=packagist&logoColor=white)](https://packagist.org/packages/matraux/filesystem)
+[![Last release](https://img.shields.io/github/v/release/matraux/filesystem?display_name=tag&logo=github&logoColor=white)](https://github.com/matraux/filesystem/releases)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?logo=open-source-initiative&logoColor=white)](LICENSE)
+[![PHP](https://img.shields.io/badge/PHP-8.4+-blue.svg?logo=php&logoColor=white)](https://php.net)
+[![Security Policy](https://img.shields.io/badge/Security-Policy-blue?logo=bitwarden&logoColor=white)](./.github/SECURITY.md)
+[![Contributing](https://img.shields.io/badge/Contributing-Disabled-lightgrey?logo=github&logoColor=white)](CONTRIBUTING.md)
+[![QA Status](https://img.shields.io/github/actions/workflow/status/matraux/filesystem/qa.yml?label=Quality+Assurance&logo=checkmarx&logoColor=white)](https://github.com/matraux/filesystem/actions/workflows/qa.yml)
+[![Issues](https://img.shields.io/github/issues/matraux/filesystem?logo=github&logoColor=white)](https://github.com/matraux/filesystem/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/matraux/filesystem?logo=git&logoColor=white)](https://github.com/matraux/filesystem/commits)
 
+<br>
 
+## Introduction
 A PHP 8.4+ library that simplifies file and folder operations using an object-oriented API. Supports renaming, moving, streaming, and deletion with optional integration for PSR-7 and Nette\Http\FileUpload.
 
+<br>
 
-# Features
+## Features
 - File and folder manipulation with fluent API
 - Relative and absolute path resolution
 - File iteration via chunks (stream-style)
@@ -21,12 +25,16 @@ A PHP 8.4+ library that simplifies file and folder operations using an object-or
 - Nette FileUpload support `Nette\Http\FileUpload`
 - Easy extension via inheritance
 
+<br>
 
-# Installation
+## Installation
 ```bash
 composer require matraux/filesystem
 ```
 
+<br>
+
+## Requirements
 | version | PHP | Note
 |----|---|---
 | 1.0.0 | PHP 8.3 | Initial commit
@@ -34,7 +42,9 @@ composer require matraux/filesystem
 | 1.1.1 | PHP 8.4 | Property accessor
 | 1.1.2 | PHP 8.4 | Quality Assurance
 
-# Usage
+<br>
+
+## Examples
 See [File](./docs/File.md) for advance instruction.
 ```php
 use Matraux\FileSystem\File\File;
@@ -51,10 +61,12 @@ $folder = Folder::create()->addPath('backup');
 echo $folder->absolute; // "C:\Users\MATRAUX\Webs\Resources\FileSystem\backup"
 ```
 
+<br>
 
-# Development
+## Development
 See [Development](./docs/Development.md) for debug, test instructions, static analysis, and coding standards.
 
+<br>
 
-# Support
+## Support
 For bug reports and feature requests, please use the [issue tracker](https://github.com/matraux/filesystem/issues).
