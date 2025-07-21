@@ -12,14 +12,11 @@ jobs:
     container:
       image: php:8.4-cli
     steps:
-      - name: Install system dependencies
-        run: |
-          apt-get update -y > /dev/null
-          apt-get install -y zip libzip-dev libjpeg-dev libpng-dev git unzip > /dev/null
-
       - name: Install PHP extensions
         run: |
-          docker-php-ext-install zip gd > /dev/null
+          apt-get update -y > /dev/null
+          apt-get install -y zip libzip-dev > /dev/null
+          docker-php-ext-install zip > /dev/null
 
       - name: Install Composer
         run: |
@@ -27,14 +24,14 @@ jobs:
           php composer-setup.php --install-dir=/usr/local/bin --filename=composer
           rm composer-setup.php
 
-      - name: Checkout code
+      - name: Clone repository
         uses: actions/checkout@v3
 
-      - name: Install dependencies
+      - name: Run Composer
         run: composer install --no-progress --prefer-dist
 
-      - name: Create empty editor.phpstan.neon
-        run: touch phpstan.editor.neon
+      - name: Prepare PHPStan config
+        run: touch editor.phpstan.neon
 
       - name: Run PHPStan
         run: composer stan
@@ -45,14 +42,11 @@ jobs:
     container:
       image: php:8.4-cli
     steps:
-      - name: Install system dependencies
-        run: |
-          apt-get update -y > /dev/null
-          apt-get install -y zip libzip-dev libjpeg-dev libpng-dev git unzip > /dev/null
-
       - name: Install PHP extensions
         run: |
-          docker-php-ext-install zip gd > /dev/null
+          apt-get update -y > /dev/null
+          apt-get install -y zip libzip-dev > /dev/null
+          docker-php-ext-install zip > /dev/null
 
       - name: Install Composer
         run: |
@@ -60,10 +54,10 @@ jobs:
           php composer-setup.php --install-dir=/usr/local/bin --filename=composer
           rm composer-setup.php
 
-      - name: Checkout code
+      - name: Clone repository
         uses: actions/checkout@v3
 
-      - name: Install dependencies
+      - name: Run Composer
         run: composer install --no-progress --prefer-dist
 
       - name: Run Tests
