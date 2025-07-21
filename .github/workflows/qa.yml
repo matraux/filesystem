@@ -26,6 +26,7 @@ jobs:
 
       - name: Clone repository
         run: |
+          git config --global --add safe.directory "$(pwd)"
           git clone https://github.com/${{ github.repository }} .
           git checkout ${{ github.sha }}
 
@@ -58,6 +59,7 @@ jobs:
 
       - name: Clone repository
         run: |
+          git config --global --add safe.directory "$(pwd)"
           git clone https://github.com/${{ github.repository }} .
           git checkout ${{ github.sha }}
 
