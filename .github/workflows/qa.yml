@@ -9,26 +9,22 @@ jobs:
   phpstan:
     name: PHPStan
     runs-on: ubuntu-latest
-    container:
-      image: php:8.4-cli
     steps:
-      - name: Install PHP extensions
-        run: |
-          apt-get update -y > /dev/null
-          apt-get install -y zip libzip-dev git > /dev/null
-          docker-php-ext-install zip > /dev/null
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Install Composer
-        run: |
-          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-          php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-          rm composer-setup.php
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.composer/cache
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-php-
 
-      - name: Clone repository
-        run: |
-          git config --global --add safe.directory "$(pwd)"
-          git clone https://github.com/${{ github.repository }} .
-          git checkout ${{ github.sha }}
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer
 
       - name: Run Composer
         run: composer install --no-progress --prefer-dist
@@ -42,26 +38,22 @@ jobs:
   tests:
     name: Tests
     runs-on: ubuntu-latest
-    container:
-      image: php:8.4-cli
     steps:
-      - name: Install PHP extensions
-        run: |
-          apt-get update -y > /dev/null
-          apt-get install -y zip libzip-dev git > /dev/null
-          docker-php-ext-install zip > /dev/null
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Install Composer
-        run: |
-          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-          php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-          rm composer-setup.php
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.composer/cache
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-php-
 
-      - name: Clone repository
-        run: |
-          git config --global --add safe.directory "$(pwd)"
-          git clone https://github.com/${{ github.repository }} .
-          git checkout ${{ github.sha }}
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer
 
       - name: Run Composer
         run: composer install --no-progress --prefer-dist
