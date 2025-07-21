@@ -18,7 +18,8 @@ jobs:
         with:
           path: ~/.composer/cache
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-php-
+          restore-keys: |
+            ${{ runner.os }}-php-
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
@@ -47,7 +48,8 @@ jobs:
         with:
           path: ~/.composer/cache
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-php-
+          restore-keys: |
+            ${{ runner.os }}-php-
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
