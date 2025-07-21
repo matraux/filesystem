@@ -15,7 +15,7 @@ jobs:
       - name: Install PHP extensions
         run: |
           apt-get update -y > /dev/null
-          apt-get install -y zip libzip-dev > /dev/null
+          apt-get install -y zip libzip-dev git > /dev/null
           docker-php-ext-install zip > /dev/null
 
       - name: Install Composer
@@ -25,13 +25,15 @@ jobs:
           rm composer-setup.php
 
       - name: Clone repository
-        uses: actions/checkout@v3
+        run: |
+          git clone https://github.com/${{ github.repository }} .
+          git checkout ${{ github.sha }}
 
       - name: Run Composer
         run: composer install --no-progress --prefer-dist
 
       - name: Prepare PHPStan config
-        run: touch editor.phpstan.neon
+        run: touch phpstan.editor.neon
 
       - name: Run PHPStan
         run: composer stan
@@ -45,7 +47,7 @@ jobs:
       - name: Install PHP extensions
         run: |
           apt-get update -y > /dev/null
-          apt-get install -y zip libzip-dev > /dev/null
+          apt-get install -y zip libzip-dev git > /dev/null
           docker-php-ext-install zip > /dev/null
 
       - name: Install Composer
@@ -55,7 +57,9 @@ jobs:
           rm composer-setup.php
 
       - name: Clone repository
-        uses: actions/checkout@v3
+        run: |
+          git clone https://github.com/${{ github.repository }} .
+          git checkout ${{ github.sha }}
 
       - name: Run Composer
         run: composer install --no-progress --prefer-dist
