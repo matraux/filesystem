@@ -41,6 +41,7 @@ composer require matraux/filesystem
 | 1.0.9 | PHP 8.3 | Cache optimization
 | 1.1.1 | PHP 8.4 | Property accessor
 | 1.1.2 | PHP 8.4 | Quality Assurance
+| 1.1.4 | PHP 8.4 | Docs update
 
 <br>
 

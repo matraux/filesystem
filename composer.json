@@ -3,7 +3,7 @@
   "description": "A PHP 8.4+ library for object-oriented file and folder manipulation with support for PSR-7 and Nette\\Http\\FileUpload.",
   "keywords": ["File System", "filesystem", "MATRAUX"],
   "type": "library",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "license": "MIT",
   "authors": [
     {
