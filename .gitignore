@@ -1,4 +1,4 @@
 vendor
 temp
-editor.phpstan.neon
-editor.tracy.neon
+phpstan.editor.neon
+tracy.editor.neon

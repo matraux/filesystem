@@ -1,5 +1,5 @@
 includes:
-	- %currentWorkingDirectory%/editor.phpstan.neon
+	- %currentWorkingDirectory%/phpstan.editor.neon
 
 parameters:
 	scanDirectories:

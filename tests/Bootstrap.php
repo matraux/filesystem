@@ -46,7 +46,7 @@ final class Bootstrap
 		Debugger::$maxLength = 1000;
 		Debugger::$logDirectory = self::Temp;
 
-		if (is_file($config = self::Root . 'editor.tracy.neon')) {
+		if (is_file($config = self::Root . 'tracy.editor.neon')) {
 			/** @var array<string,array<string,string>> $neon */
 			$neon = Neon::decodeFile($config);
 			Debugger::$editor = $neon['tracy']['editor'] ?? null;

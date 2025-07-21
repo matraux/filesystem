@@ -9,23 +9,26 @@ jobs:
   phpstan:
     name: PHPStan
     runs-on: ubuntu-latest
-
+    container:
+      image: php:8.4-cli
     steps:
+      - name: Install system dependencies
+        run: |
+          apt-get update -y > /dev/null
+          apt-get install -y zip libzip-dev libjpeg-dev libpng-dev git unzip > /dev/null
+
+      - name: Install PHP extensions
+        run: |
+          docker-php-ext-install zip gd > /dev/null
+
+      - name: Install Composer
+        run: |
+          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+          php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+          rm composer-setup.php
+
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Cache Composer dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.composer/cache
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-php-
-
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-          tools: composer
 
       - name: Install dependencies
         run: composer install --no-progress --prefer-dist
@@ -39,23 +42,26 @@ jobs:
   tests:
     name: Tests
     runs-on: ubuntu-latest
-
+    container:
+      image: php:8.4-cli
     steps:
+      - name: Install system dependencies
+        run: |
+          apt-get update -y > /dev/null
+          apt-get install -y zip libzip-dev libjpeg-dev libpng-dev git unzip > /dev/null
+
+      - name: Install PHP extensions
+        run: |
+          docker-php-ext-install zip gd > /dev/null
+
+      - name: Install Composer
+        run: |
+          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+          php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+          rm composer-setup.php
+
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Cache Composer dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.composer/cache
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-php-
-
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-          tools: composer
 
       - name: Install dependencies
         run: composer install --no-progress --prefer-dist
