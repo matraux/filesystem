@@ -2,9 +2,9 @@
 
 namespace Matraux\FileSystem\Folder;
 
-use Composer\InstalledVersions;
-use RuntimeException;
 use Stringable;
+use Composer\InstalledVersions;
+use Matraux\FileSystem\Exception\FolderRootException;
 
 class Folder implements Stringable
 {
@@ -14,7 +14,8 @@ class Folder implements Stringable
 	/**
 	 * Will be printed as absolute path
 	 */
-	final public self $absolute {
+	final public self $absolute
+	{
 		get {
 			$clone = clone $this;
 			$clone->isAbsolute = true;
@@ -26,7 +27,8 @@ class Folder implements Stringable
 	/**
 	 * Will be printed as relative path
 	 */
-	final public self $relative {
+	final public self $relative
+	{
 		get {
 			$clone = clone $this;
 			$clone->isAbsolute = false;
@@ -42,7 +44,8 @@ class Folder implements Stringable
 
 	final protected string $path;
 
-	final protected string $root {
+	final protected string $root
+	{
 		get {
 			if (isset($this->root)) {
 				return $this->root;
@@ -73,14 +76,15 @@ class Folder implements Stringable
 			}
 
 			if (!$root) {
-				throw new RuntimeException('Can not obtain root directory.');
+				throw new FolderRootException('Unable to resolve root directory.');
 			}
 
 			return $this->root = self::normalizePath($root);
 		}
 	}
 
-	final protected ?string $print {
+	final protected ?string $print
+	{
 		get {
 			if(isset($this->print)) {
 				return $this->print;

@@ -2,7 +2,7 @@
 
 namespace Matraux\FileSystem\File;
 
-use RuntimeException;
+use Matraux\FileSystem\Exception\FileContentException;
 
 /**
  * @mixin File
@@ -12,15 +12,16 @@ trait Size
 
 	/**
 	 * @var int<0,max> $size File size in bytes
-	 * @throws RuntimeException If can not obtain file size
+	 * @throws FileContentException
 	 */
-	final public int $size {
+	final public int $size
+	{
 		get {
 			$size = $this->file->getSize();
 
-	if (!is_int($size) || $size < 0) {
-		throw new RuntimeException(sprintf('Can not obtaint size of file "%s".', (string) $this));
-	}
+			if (!is_int($size) || $size < 0) {
+				throw new FileContentException(sprintf('Unable to get size of file "%s".', (string) $this));
+			}
 
 			return $size;
 		}

@@ -3,18 +3,19 @@
 namespace Matraux\FileSystem\File;
 
 use Countable;
-use Iterator;
-use Matraux\FileSystem\Folder\Folder;
-use Nette\Utils\FileSystem;
-use Nette\Utils\Strings;
-use RuntimeException;
-use SplFileObject;
 use Stringable;
+use SplFileObject;
+use RuntimeException;
+use IteratorAggregate;
+use Nette\Utils\Strings;
+use Nette\Utils\FileSystem;
+use Matraux\FileSystem\Folder\Folder;
+use Matraux\FileSystem\Exception\FileNotFoundException;
 
 /**
- * @implements Iterator<int,string>
+ * @implements IteratorAggregate<int,string>
  */
-class File implements Stringable, Countable, Iterator
+class File implements Stringable, Countable, IteratorAggregate
 {
 
 	use FileUpload;
@@ -28,7 +29,8 @@ class File implements Stringable, Countable, Iterator
 	/**
 	 * Absolute directory path
 	 */
-	final public string $path {
+	final public string $path
+	{
 		set(string $path){
 			FileSystem::rename((string) $this, $path . $this->name);
 			$this->initFile($path . $this->name);
@@ -41,7 +43,8 @@ class File implements Stringable, Countable, Iterator
 	/**
 	 * Relative directory path
 	 */
-	final public string $relativePath {
+	final public string $relativePath
+	{
 		get {
 			return (string) Folder::create($this->file->getPath())->relative;
 		}
@@ -50,7 +53,8 @@ class File implements Stringable, Countable, Iterator
 	/**
 	 * Relative directory path for browser
 	 */
-	final public string $webPath {
+	final public string $webPath
+	{
 		get {
 			return Strings::replace($this->relativePath, '~\\\\~', '/');
 		}
@@ -59,7 +63,8 @@ class File implements Stringable, Countable, Iterator
 	/**
 	 * File name
 	 */
-	final public string $name {
+	final public string $name
+	{
 		set(string $name) {
 			FileSystem::rename((string) $this, $this->path . $name);
 			$this->initFile($this->path . $name);
@@ -85,7 +90,8 @@ class File implements Stringable, Countable, Iterator
 	/**
 	 * File extension
 	 */
-	final public ?string $extension {
+	final public ?string $extension
+	{
 		set(?string $extension) {
 			$this->name = Strings::replace($this->name, '~\.' . $this->file->getExtension() . '$~') . '.' . $extension;
 		}
@@ -99,7 +105,8 @@ class File implements Stringable, Countable, Iterator
 	/**
 	 * File MIME type
 	 */
-	final public ?string $type {
+	final public ?string $type
+	{
 		get {
 			if (!$finfo = finfo_open(FILEINFO_MIME_TYPE)) {
 				return null;
@@ -112,7 +119,8 @@ class File implements Stringable, Countable, Iterator
 	/**
 	 * File MTime
 	 */
-	final public ?int $mTime {
+	final public ?int $mTime
+	{
 		get {
 			$mTime = $this->file->getMTime();
 
@@ -121,12 +129,12 @@ class File implements Stringable, Countable, Iterator
 	}
 
 	/**
-	 * @throws RuntimeException If can not open file
+	 * @throws FileNotFoundException If can not open file
 	 */
 	final private function __construct(string $file)
 	{
 		if (!is_file($file)) {
-			throw new RuntimeException(sprintf('Failed to open file: No such file "%s".', $file));
+			throw new FileNotFoundException(sprintf('Failed to open file: No such file "%s".', $file));
 		}
 
 		$this->initFile($file);
@@ -141,7 +149,6 @@ class File implements Stringable, Countable, Iterator
 	/**
 	 * Create file from existing file
 	 *
-	 * @throws RuntimeException If can not open file
 	 */
 	final public static function fromPath(string $file): static
 	{

@@ -6,7 +6,6 @@ use Matraux\FileSystem\Folder\Folder;
 use Nette\Http\FileUpload as NetteFileUpload;
 use Nette\IOException;
 use Nette\Utils\FileSystem;
-use RuntimeException;
 
 /**
  * @mixin File
@@ -14,7 +13,8 @@ use RuntimeException;
 trait FileUpload
 {
 
-	final public NetteFileUpload $fileUpload {
+	final public NetteFileUpload $fileUpload
+	{
 		get {
 			return new NetteFileUpload([
 				'name' => $this->name,
@@ -29,7 +29,6 @@ trait FileUpload
 	/**
 	 * Create file from FileUpload
 	 *
-	 * @throws RuntimeException If can not create file
 	 * @throws IOException If can not create temporary dir
 	 */
 	final public static function fromFileUpload(NetteFileUpload $fileUpload, ?Folder $folder = null): static

@@ -11,13 +11,14 @@ trait Temporary
 	/**
 	 * File will be removed on shutdown
 	 */
-	final public bool $temporary {
+	final public bool $temporary
+	{
 		set(bool $temporary) {
 			$this->temporary = $temporary;
 
-	if ($this->shutdownRegister) {
-		return;
-	}
+			if ($this->shutdownRegister) {
+				return;
+			}
 
 			$this->shutdownRegister = true;
 
