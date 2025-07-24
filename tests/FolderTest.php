@@ -34,7 +34,6 @@ final class FolderTest extends TestCase
 		Assert::equal(basename(__DIR__) . DIRECTORY_SEPARATOR, (string) $folder->relative);
 	}
 
-
 }
 
 (new FolderTest())->run();

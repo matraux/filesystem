@@ -2,13 +2,13 @@
 
 namespace Matraux\FileSystemTest;
 
+use Nette\Neon\Neon;
 use Nette\StaticClass;
 use Nette\Utils\FileSystem;
 use Tester\Dumper;
 use Tester\Environment;
 use Tester\Helpers;
 use Tracy\Debugger;
-use Nette\Neon\Neon;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

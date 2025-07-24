@@ -2,12 +2,12 @@
 
 namespace Matraux\FileSystem\File;
 
-use Traversable;
 use IteratorAggregate;
+use Matraux\FileSystem\Exception\FileContentException;
+use Matraux\FileSystem\Folder\Folder;
 use Nette\IOException;
 use Nette\Utils\FileSystem;
-use Matraux\FileSystem\Folder\Folder;
-use Matraux\FileSystem\Exception\FileContentException;
+use Traversable;
 
 /**
  * @mixin File
@@ -57,7 +57,7 @@ trait Content
 	{
 		$this->file->rewind();
 
-		while ($this->size > $this->file->ftell() ) {
+		while ($this->size > $this->file->ftell()) {
 			$content = $this->file->fread(self::ContentDataPart);
 			if ($content === false) {
 				throw new FileContentException(sprintf('Unable to read from file "%s".', (string) $this));

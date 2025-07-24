@@ -2,11 +2,11 @@
 
 namespace Matraux\FileSystem\File;
 
+use Matraux\FileSystem\Exception\FileContentException;
+use Matraux\FileSystem\Folder\Folder;
 use Nette\IOException;
 use Nette\Utils\FileSystem;
-use Matraux\FileSystem\Folder\Folder;
 use Psr\Http\Message\StreamInterface;
-use Matraux\FileSystem\Exception\FileContentException;
 
 /**
  * @mixin File
