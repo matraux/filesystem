@@ -37,11 +37,12 @@ composer require matraux/filesystem
 ## Requirements
 | version | PHP | Note
 |----|---|---
-| 1.0.0 | PHP 8.3 | Initial commit
-| 1.0.9 | PHP 8.3 | Cache optimization
-| 1.1.1 | PHP 8.4 | Property accessor
-| 1.1.2 | PHP 8.4 | Quality Assurance
-| 1.1.4 | PHP 8.4 | Docs update
+| 1.0.0 | 8.3+ | Initial commit
+| 1.0.9 | 8.3+ | Cache optimization
+| 1.1.1 | 8.4+ | Property accessor
+| 1.1.2 | 8.4+ | Quality Assurance
+| 1.1.4 | 8.4+ | Docs update
+| 1.2.0 | 8.4+ | Exception handling refactor
 
 <br>
 
