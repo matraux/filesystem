@@ -45,9 +45,9 @@ final class FileTest extends TestCase
 		Bootstrap::purgeTemp(__FUNCTION__);
 
 		$contents = [
-			0 => Random::generate(1024),
-			1024 => Random::generate(1024),
-			2048 => Random::generate(1024),
+			Random::generate(1024),
+			Random::generate(1024),
+			Random::generate(1024),
 		];
 
 		$file = File::fromContent(implode('', $contents), $folder);
