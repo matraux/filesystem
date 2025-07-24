@@ -2,25 +2,27 @@
 
 namespace Matraux\FileSystem\File;
 
-use Iterator;
-use Matraux\FileSystem\Folder\Folder;
+use Traversable;
+use IteratorAggregate;
 use Nette\IOException;
 use Nette\Utils\FileSystem;
-use RuntimeException;
+use Matraux\FileSystem\Folder\Folder;
+use Matraux\FileSystem\Exception\FileContentException;
 
 /**
  * @mixin File
- * @implements Iterator<int,string>
+ * @implements IteratorAggregate<int,string>
  */
 trait Content
 {
 
-	private const int DataPart = 1024;
+	final protected const int ContentDataPart = 1024;
 
 	/**
 	 * Whole content of file
 	 */
-	final public string $content {
+	final public string $content
+	{
 		get {
 			return FileSystem::read((string) $this);
 		}
@@ -29,8 +31,8 @@ trait Content
 	/**
 	 * Create file from content
 	 *
-	 * @throws RuntimeException If can not create file
-	 * @throws IOException If can not create temporary dir
+	 * @throws FileContentException
+	 * @throws IOException
 	 */
 	final public static function fromContent(string $content, ?Folder $folder = null): static
 	{
@@ -40,7 +42,7 @@ trait Content
 		FileSystem::createDir($folder);
 
 		if (!$file = tempnam($folder, 'content-')) {
-			throw new RuntimeException('Failed to create temporary file.');
+			throw new FileContentException(sprintf('Unable to create temporary file in directory "%s".', $folder));
 		}
 
 		FileSystem::write($file, $content);
@@ -49,47 +51,20 @@ trait Content
 	}
 
 	/**
-	 * @throws RuntimeException If can not read part of file
+	 * @throws FileContentException
 	 */
-	final public function current(): string
-	{
-		$content = $this->file->fread(self::DataPart);
-
-		if ($content === false) {
-			throw new RuntimeException(sprintf('Can not read data on file "%s"', (string) $this));
-		}
-
-		$this->file->fseek($this->key() - self::DataPart);
-
-		return $content;
-	}
-
-	final public function next(): void
-	{
-		if ($this->file->fseek($this->key() + self::DataPart) !== 0) {
-			throw new RuntimeException(sprintf('Can not seek on file "%s".', (string) $this));
-		}
-	}
-
-	final public function key(): int
-	{
-		$key = $this->file->ftell();
-
-		if ($key === false) {
-			throw new RuntimeException(sprintf('Can not obtaint pointer on file "%s".', (string) $this));
-		}
-
-		return $key;
-	}
-
-	final public function valid(): bool
-	{
-		return $this->size > $this->key();
-	}
-
-	final public function rewind(): void
+	final public function getIterator(): Traversable
 	{
 		$this->file->rewind();
+
+		while ($this->size > $this->file->ftell() ) {
+			$content = $this->file->fread(self::ContentDataPart);
+			if ($content === false) {
+				throw new FileContentException(sprintf('Unable to read from file "%s".', (string) $this));
+			}
+
+			yield $content;
+		}
 	}
 
 }
