@@ -24,8 +24,7 @@ echo $file->size; // 0 (0 bytes for empty file)
 
 echo count($file); // Alias for $size
 
-foreach($file as $pointer => $part) {
-	echo $pointer; // integer of length $part (0, 1024, 2048, ...)
+foreach($file as $part) {
 	echo $part; // Part of file content of 1024 length
 }
 
