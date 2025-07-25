@@ -17,12 +17,12 @@
 	},
 	"suggest": {
 		"nette/http": "Required only if you use HTTP-specific features like Request, Session etc.",
-		"psr/http-message": "Required only if you use PSR HTTP message features "
+		"psr/http-message": "Required only if you use PSR HTTP message features."
 	},
 	"require-dev": {
 		"nette/tester": "^2.4",
-		"phpstan/phpstan": "*",
-		"tracy/tracy": "^2.9",
+		"phpstan/phpstan": "^2.1",
+		"tracy/tracy": "^2.10",
 		"nette/http": "^3.3",
 		"psr/http-message": "1.1",
 		"contributte/qa": "^0.3.2",
