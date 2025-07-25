@@ -12,6 +12,8 @@ parameters:
 	tmpDir:
 		%currentWorkingDirectory%/temp/phpstan
 
+	treatPhpDocTypesAsCertain: false
+
 	level: 10
 
 	editorUrlTitle: '%%relFile%%:%%line%%'
