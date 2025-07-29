@@ -26,7 +26,8 @@
 		"nette/http": "^3.3",
 		"psr/http-message": "1.1",
 		"contributte/qa": "^0.3.2",
-		"nette/neon": "^3.4"
+		"nette/neon": "^3.4",
+		"matraux/php-benchmark": "^2.0"
 	},
 	"autoload": {
 		"psr-4": {
