@@ -42,7 +42,7 @@ composer require matraux/filesystem
 | 1.1.1 | 8.4+ | Property accessor
 | 1.1.2 | 8.4+ | Quality Assurance
 | 1.1.4 | 8.4+ | Docs update
-| 1.2.0 | 8.4+ | Exception handling refactor
+| 1.2.1 | 8.4+ | Performance boost via cache
 
 <br>
 
