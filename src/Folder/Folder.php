@@ -8,8 +8,19 @@ use Matraux\FileSystem\Exception\FolderRootException;
 
 class Folder implements Stringable
 {
-
 	protected const string Root = './';
+
+	/** @var array<int,string> */
+	final protected array $paths = [];
+
+	final protected bool $isAbsolute = false;
+
+	private static string $rootCache;
+
+	/**
+	 * @var array<string,static>
+	 */
+	private static array $instanceCache = [];
 
 	/**
 	 * Will be printed as absolute path
@@ -17,10 +28,7 @@ class Folder implements Stringable
 	final public self $absolute
 	{
 		get {
-			$clone = clone $this;
-			$clone->isAbsolute = true;
-
-			return $clone;
+			return $this->absolute ??= self::getInstanceCache($this->paths, true);
 		}
 	}
 
@@ -30,25 +38,15 @@ class Folder implements Stringable
 	final public self $relative
 	{
 		get {
-			$clone = clone $this;
-			$clone->isAbsolute = false;
-
-			return $clone;
+			return $this->relative ??= self::getInstanceCache($this->paths, false);
 		}
 	}
-
-	/** @var array<int,string> */
-	final protected array $paths = [];
-
-	final protected bool $isAbsolute = false;
-
-	final protected string $path;
 
 	final protected string $root
 	{
 		get {
-			if (isset($this->root)) {
-				return $this->root;
+			if (isset(self::$rootCache)) {
+				return self::$rootCache;
 			}
 
 			$root = null;
@@ -79,23 +77,18 @@ class Folder implements Stringable
 				throw new FolderRootException('Unable to resolve root directory.');
 			}
 
-			return $this->root = self::normalizePath($root);
+			return self::$rootCache = self::normalizePath($root);
 		}
 	}
 
-	final protected ?string $print
+	final protected string $print
 	{
 		get {
-			if(isset($this->print)) {
+			if (isset($this->print)) {
 				return $this->print;
 			}
 
-			$path = $this->path;
-
-			if (!empty($this->paths)) {
-				$path .= DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $this->paths);
-			}
-
+			$path = implode(DIRECTORY_SEPARATOR, $this->paths);
 			$path = self::normalizePath($path);
 
 			if ($this->isAbsolute && !str_starts_with($path, $this->root)) {
@@ -108,44 +101,54 @@ class Folder implements Stringable
 		}
 	}
 
-	final protected function __construct(string $path)
+	/**
+	 * @param array<int,string> $paths
+	 */
+	final protected function __construct(array $paths = [], bool $isAbsolute = false)
 	{
-		$this->path = $path;
+		$this->paths = $paths;
+		$this->isAbsolute = $isAbsolute;
 	}
 
 	final public static function create(string|Stringable|null $path = self::Root): static
 	{
-		return new static((string) $path);
+		return self::getInstanceCache([(string) $path], false);
+	}
+
+	/**
+	 * @param array<string> $paths
+	 */
+	final protected static function getInstanceCache(array $paths, bool $isAbsolute): static
+	{
+		$index = $isAbsolute . '|' . implode('|', $paths);
+
+		return self::$instanceCache[$index] ??= new static($paths, $isAbsolute);
 	}
 
 	final public function addPath(string|Stringable $path): static
 	{
-		$clone = clone $this;
-		$clone->paths[] = (string) $path;
+		$paths = $this->paths;
+		$paths[] = (string) $path;
 
-		return $clone;
+		return self::getInstanceCache($paths, $this->isAbsolute);
 	}
 
 	final protected static function normalizePath(string $path): string
 	{
-		/** @var array<string> $parts */
-		$parts = (array) preg_split('~[/\\\\]+~', $path);
 		$result = [];
+		$parts = preg_split('~[/\\\\]+~', $path);
 
-		foreach ($parts as $index => $part) {
-			if ($part === '..' && end($result) !== '.' && end($result) !== '..') {
-				array_pop($result);
-			} elseif ($index === 0 || (!empty($part) && $part !== '.')) {
-				$result[] = $part;
+		if ($parts) {
+			foreach ($parts as $index => $part) {
+				if ($part === '..' && end($result) !== '.' && end($result) !== '..') {
+					array_pop($result);
+				} elseif ($index === 0 || (!empty($part) && $part !== '.')) {
+					$result[] = $part;
+				}
 			}
 		}
 
 		return empty($result) ? DIRECTORY_SEPARATOR : implode(DIRECTORY_SEPARATOR, $result) . DIRECTORY_SEPARATOR;
-	}
-
-	final public function __clone()
-	{
-		$this->print = null;
 	}
 
 	final public function __toString(): string
