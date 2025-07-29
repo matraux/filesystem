@@ -2,25 +2,13 @@
 
 namespace Matraux\FileSystem\Folder;
 
-use Stringable;
 use Composer\InstalledVersions;
 use Matraux\FileSystem\Exception\FolderRootException;
+use Stringable;
 
 class Folder implements Stringable
 {
 	protected const string Root = './';
-
-	/** @var array<int,string> */
-	final protected array $paths = [];
-
-	final protected bool $isAbsolute = false;
-
-	private static string $rootCache;
-
-	/**
-	 * @var array<string,static>
-	 */
-	private static array $instanceCache = [];
 
 	/**
 	 * Will be printed as absolute path
@@ -41,6 +29,11 @@ class Folder implements Stringable
 			return $this->relative ??= self::getInstanceCache($this->paths, false);
 		}
 	}
+
+	/** @var array<int,string> */
+	final protected array $paths = [];
+
+	final protected bool $isAbsolute = false;
 
 	final protected string $root
 	{
@@ -101,9 +94,12 @@ class Folder implements Stringable
 		}
 	}
 
-	/**
-	 * @param array<int,string> $paths
-	 */
+	private static string $rootCache;
+
+	/** @var array<string,static> */
+	private static array $instanceCache = [];
+
+	/** @param array<int,string> $paths */
 	final protected function __construct(array $paths = [], bool $isAbsolute = false)
 	{
 		$this->paths = $paths;
@@ -113,6 +109,14 @@ class Folder implements Stringable
 	final public static function create(string|Stringable|null $path = self::Root): static
 	{
 		return self::getInstanceCache([(string) $path], false);
+	}
+
+	final public function addPath(string|Stringable $path): static
+	{
+		$paths = $this->paths;
+		$paths[] = (string) $path;
+
+		return self::getInstanceCache($paths, $this->isAbsolute);
 	}
 
 	/**
@@ -125,17 +129,9 @@ class Folder implements Stringable
 		return self::$instanceCache[$index] ??= new static($paths, $isAbsolute);
 	}
 
-	final public function addPath(string|Stringable $path): static
-	{
-		$paths = $this->paths;
-		$paths[] = (string) $path;
-
-		return self::getInstanceCache($paths, $this->isAbsolute);
-	}
-
 	final protected static function normalizePath(string $path): string
 	{
-		if(!$parts = preg_split('~[/\\\\]+~', $path)) {
+		if (!$parts = preg_split('~[/\\\\]+~', $path)) {
 			return DIRECTORY_SEPARATOR;
 		}
 
@@ -153,7 +149,7 @@ class Folder implements Stringable
 
 	final public function __toString(): string
 	{
-		return (string) $this->print;
+		return $this->print;
 	}
 
 }
