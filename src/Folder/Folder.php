@@ -94,7 +94,7 @@ class Folder implements Stringable
 			if ($this->isAbsolute && !str_starts_with($path, $this->root)) {
 				$path = self::normalizePath($this->root . DIRECTORY_SEPARATOR . $path);
 			} elseif (!$this->isAbsolute && str_starts_with($path, $this->root)) {
-				$path = self::normalizePath(str_replace($this->root, '', $path));
+				$path = substr($path, strlen($this->root));
 			}
 
 			return $this->print = $path;
@@ -116,7 +116,7 @@ class Folder implements Stringable
 	}
 
 	/**
-	 * @param array<string> $paths
+	 * @param array<int,string> $paths
 	 */
 	final protected static function getInstanceCache(array $paths, bool $isAbsolute): static
 	{
@@ -135,20 +135,20 @@ class Folder implements Stringable
 
 	final protected static function normalizePath(string $path): string
 	{
-		$result = [];
-		$parts = preg_split('~[/\\\\]+~', $path);
+		if(!$parts = preg_split('~[/\\\\]+~', $path)) {
+			return DIRECTORY_SEPARATOR;
+		}
 
-		if ($parts) {
-			foreach ($parts as $index => $part) {
-				if ($part === '..' && end($result) !== '.' && end($result) !== '..') {
-					array_pop($result);
-				} elseif ($index === 0 || (!empty($part) && $part !== '.')) {
-					$result[] = $part;
-				}
+		$result = [];
+		foreach ($parts as $index => $part) {
+			if ($part === '..' && end($result) !== '.' && end($result) !== '..') {
+				array_pop($result);
+			} elseif ($index === 0 || ($part !== '' && $part !== '.')) {
+				$result[] = $part;
 			}
 		}
 
-		return empty($result) ? DIRECTORY_SEPARATOR : implode(DIRECTORY_SEPARATOR, $result) . DIRECTORY_SEPARATOR;
+		return implode(DIRECTORY_SEPARATOR, $result) . DIRECTORY_SEPARATOR;
 	}
 
 	final public function __toString(): string
