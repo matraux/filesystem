@@ -47,7 +47,7 @@ composer require matraux/filesystem
 <br>
 
 ## Examples
-See [File](./docs/File.md) for advance instruction.
+See [File](./docs/File.md) for advanced instructions.
 ```php
 use Matraux\FileSystem\File\File;
 
@@ -55,7 +55,7 @@ $file = File::fromPath('C:\Users\MATRAUX\Webs\Resources\FileSystem\log.txt');
 echo $file->name;  // "log.txt"
 ```
 
-See [Folder](./docs/Folder.md) for advance instruction.
+See [Folder](./docs/Folder.md) for advanced instructions.
 ```php
 use Matraux\FileSystem\Folder\Folder;
 
