@@ -5,7 +5,6 @@ namespace Matraux\FileSystem\File;
 use Countable;
 use Stringable;
 use SplFileObject;
-use RuntimeException;
 use IteratorAggregate;
 use Nette\Utils\Strings;
 use Nette\Utils\FileSystem;
