@@ -4,6 +4,7 @@ namespace Matraux\FileSystem\Folder;
 
 use Composer\InstalledVersions;
 use Matraux\FileSystem\Exception\FolderRootException;
+use Nette\Utils\FileSystem;
 use Stringable;
 
 class Folder implements Stringable
@@ -84,7 +85,7 @@ class Folder implements Stringable
 			$path = implode(DIRECTORY_SEPARATOR, $this->paths);
 			$path = self::normalizePath($path);
 
-			if ($this->isAbsolute && !str_starts_with($path, $this->root)) {
+			if ($this->isAbsolute && !str_starts_with($path, $this->root) && !FileSystem::isAbsolute($path)) {
 				$path = self::normalizePath($this->root . DIRECTORY_SEPARATOR . $path);
 			} elseif (!$this->isAbsolute && str_starts_with($path, $this->root)) {
 				$path = substr($path, strlen($this->root));
@@ -150,6 +151,13 @@ class Folder implements Stringable
 	final public function __toString(): string
 	{
 		return $this->print;
+	}
+
+	final public function init(): static
+	{
+		FileSystem::createDir((string) $this->absolute);
+
+		return $this;
 	}
 
 }
