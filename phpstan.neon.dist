@@ -1,0 +1,8 @@
+includes:
+	- %currentWorkingDirectory%/phpstan.core.neon
+
+# parameters:
+# 	editorUrl: 'vscode-insiders://vscode-remote/attached-container+%HEX container%/%%file%%:%%line%%'
+# 	editorUrl: 'vscode-insiders://file/%%file%%:%%line%%'
+# 	editorUrl: 'vscode://file/%%file%%:%%line%%'
+# 	editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'

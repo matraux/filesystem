@@ -1,0 +1,15 @@
+parameters:
+	scanDirectories:
+		- %currentWorkingDirectory%/vendor
+
+	paths:
+		- %currentWorkingDirectory%/src
+
+	tmpDir:
+		%rootDir%/tmp/phpstan
+
+	treatPhpDocTypesAsCertain: false
+
+	level: 10
+
+	editorUrlTitle: '%%relFile%%:%%line%%'

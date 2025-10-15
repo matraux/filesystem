@@ -1,5 +1,5 @@
 composer.lock
 vendor
 temp
-phpstan.editor.neon
-tracy.editor.neon
+phpstan.neon
+tracy.neon
