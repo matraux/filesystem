@@ -1,5 +1,4 @@
 composer.lock
 vendor
-temp
 phpstan.neon
 tracy.neon
