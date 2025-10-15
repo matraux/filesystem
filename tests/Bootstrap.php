@@ -17,11 +17,14 @@ final class Bootstrap
 
 	use StaticClass;
 
-	public const Root = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;
+	public const string Root = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;
 
-	public const Assets = __DIR__ . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR;
+	public const string Assets = __DIR__ . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR;
 
-	public const Temp = self::Root . 'temp' . DIRECTORY_SEPARATOR;
+	public static function Temp(): string
+	{
+		return sys_get_temp_dir() . DIRECTORY_SEPARATOR;
+	}
 
 	public static function tester(): void
 	{
@@ -30,7 +33,7 @@ final class Bootstrap
 
 	public static function purgeTemp(string $subfolder): string
 	{
-		$folder = self::Temp . $subfolder;
+		$folder = self::Temp() . $subfolder;
 		FileSystem::createDir($folder);
 		Dumper::$dumpDir = $folder;
 		Helpers::purge($folder);
@@ -44,9 +47,9 @@ final class Bootstrap
 		Debugger::$strictMode = true;
 		Debugger::$maxDepth = 10;
 		Debugger::$maxLength = 1000;
-		Debugger::$logDirectory = self::Temp;
+		Debugger::$logDirectory = self::Temp();
 
-		if (is_file($config = self::Root . 'tracy.editor.neon')) {
+		if (is_file($config = self::Root . 'tracy.neon')) {
 			/** @var array<string,array<string,string>> $neon */
 			$neon = Neon::decodeFile($config);
 			Debugger::$editor = $neon['tracy']['editor'] ?? null;

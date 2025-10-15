@@ -36,4 +36,4 @@ final class FolderTest extends TestCase
 
 }
 
-(new FolderTest())->run();
+new FolderTest()->run();
