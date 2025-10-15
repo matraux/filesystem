@@ -50,7 +50,7 @@
 	"scripts": {
 		"codesniffer": "\"vendor/bin/phpcs\" --standard=\"ruleset.xml\"",
 		"codefixer": "\"vendor/bin/phpcbf\" --standard=\"ruleset.xml\"",
-		"stan": "vendor/bin/phpstan analyse --configuration \"phpstan.neon\" --ansi",
+		"stan": "vendor/bin/phpstan analyse --ansi",
 		"test": "vendor/bin/tester -s -p php --colors 1 -C tests/"
 	},
 	"scripts-descriptions": {
