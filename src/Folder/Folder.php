@@ -120,6 +120,13 @@ class Folder implements Stringable
 		return self::getInstanceCache($paths, $this->isAbsolute);
 	}
 
+	final public function init(): static
+	{
+		FileSystem::createDir((string) $this->absolute);
+
+		return $this;
+	}
+
 	/**
 	 * @param array<int,string> $paths
 	 */
@@ -151,13 +158,6 @@ class Folder implements Stringable
 	final public function __toString(): string
 	{
 		return $this->print;
-	}
-
-	final public function init(): static
-	{
-		FileSystem::createDir((string) $this->absolute);
-
-		return $this;
 	}
 
 }
