@@ -34,6 +34,14 @@ final class FolderTest extends TestCase
 		Assert::equal(basename(__DIR__) . DIRECTORY_SEPARATOR, (string) $folder->relative);
 	}
 
+	public function testFolderInit(): void
+	{
+		$path = Bootstrap::purgeTemp(__FUNCTION__);
+		$folder = Folder::create($path)->addPath('A')->addPath('B');
+		Assert::equal(false, is_dir((string) $folder));
+		Assert::equal(true, is_dir((string) $folder->init()));
+	}
+
 }
 
 new FolderTest()->run();
