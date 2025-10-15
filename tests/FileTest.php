@@ -31,7 +31,6 @@ final class FileTest extends TestCase
 	{
 		Bootstrap::purgeTemp(__FUNCTION__);
 
-
 		$content = Random::generate(2048);
 		$folder = Folder::create(Bootstrap::Temp() . __FUNCTION__)->relative;
 
