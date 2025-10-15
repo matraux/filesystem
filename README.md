@@ -43,6 +43,7 @@ composer require matraux/filesystem
 | 1.1.2 | 8.4+ | Quality Assurance
 | 1.1.4 | 8.4+ | Docs update
 | 1.2.1 | 8.4+ | Performance boost via cache
+| 1.2.2 | 8.4+ | Path resolution fix
 
 <br>
 
