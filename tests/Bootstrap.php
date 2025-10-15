@@ -3,7 +3,6 @@
 namespace Matraux\FileSystemTest;
 
 use Nette\Neon\Neon;
-use Nette\StaticClass;
 use Nette\Utils\FileSystem;
 use Tester\Dumper;
 use Tester\Environment;
@@ -15,15 +14,13 @@ require_once __DIR__ . '/../vendor/autoload.php';
 final class Bootstrap
 {
 
-	use StaticClass;
-
 	public const string Root = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;
 
 	public const string Assets = __DIR__ . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR;
 
 	public static function Temp(): string
 	{
-		return sys_get_temp_dir() . DIRECTORY_SEPARATOR;
+		return sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'filesystem' . DIRECTORY_SEPARATOR;
 	}
 
 	public static function tester(): void
@@ -50,7 +47,7 @@ final class Bootstrap
 		Debugger::$logDirectory = self::Temp();
 
 		if (is_file($config = self::Root . 'tracy.neon')) {
-			/** @var array<string,array<string,string>> $neon */
+			/** @var array{tracy?:array{editor?:string}} */
 			$neon = Neon::decodeFile($config);
 			Debugger::$editor = $neon['tracy']['editor'] ?? null;
 		}

@@ -29,10 +29,10 @@ final class FileTest extends TestCase
 
 	public function testFileFromContent(): void
 	{
-		Bootstrap::purgeTemp(__FUNCTION__);
+		$path = Bootstrap::purgeTemp(__FUNCTION__);
 
 		$content = Random::generate(2048);
-		$folder = Folder::create(Bootstrap::Temp() . __FUNCTION__)->relative;
+		$folder = Folder::create($path)->absolute;
 
 		Assert::noError(function () use ($content, $folder): void {
 			File::fromContent($content, $folder);
@@ -41,14 +41,14 @@ final class FileTest extends TestCase
 
 	public function testFileReadContent(): void
 	{
-		Bootstrap::purgeTemp(__FUNCTION__);
+		$path = Bootstrap::purgeTemp(__FUNCTION__);
 
 		$contents = [
 			Random::generate(1024),
 			Random::generate(1024),
 			Random::generate(1024),
 		];
-		$folder = Folder::create(Bootstrap::Temp() . __FUNCTION__)->relative;
+		$folder = Folder::create($path)->absolute;
 		$file = File::fromContent(implode('', $contents), $folder);
 
 		Assert::equal($file->content, implode('', $contents));
@@ -60,10 +60,10 @@ final class FileTest extends TestCase
 
 	public function testFileReadSize(): void
 	{
-		Bootstrap::purgeTemp(__FUNCTION__);
+		$path = Bootstrap::purgeTemp(__FUNCTION__);
 
 		$content = Random::generate(2048);
-		$folder = Folder::create(Bootstrap::Temp() . __FUNCTION__)->relative;
+		$folder = Folder::create($path)->absolute;
 		$file = File::fromContent($content, $folder);
 
 		Assert::equal($file->size, Strings::length($content));
@@ -72,9 +72,9 @@ final class FileTest extends TestCase
 
 	public function testFileDelete(): void
 	{
-		Bootstrap::purgeTemp(__FUNCTION__);
+		$path = Bootstrap::purgeTemp(__FUNCTION__);
 
-		$folder = Folder::create(Bootstrap::Temp() . __FUNCTION__)->relative;
+		$folder = Folder::create($path)->absolute;
 		$file = File::fromContent('', $folder);
 
 		Assert::noError(function () use ($file): void {
