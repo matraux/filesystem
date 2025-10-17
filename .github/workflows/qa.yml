@@ -23,7 +23,7 @@ jobs:
         run: composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader
 
       - name: Run PHPStan
-        run: composer stan
+        run: composer phpstan
 
   tests:
     name: Tests
