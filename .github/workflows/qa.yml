@@ -2,21 +2,19 @@ name: Quality Assurance
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
-  qa:
-    name: ${{ matrix.task }}
+  phpstan:
+    name: PHPStan
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        task: [phpstan, tests]
-
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - uses: shivammathur/setup-php@v2
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
           tools: composer
@@ -24,65 +22,30 @@ jobs:
       - name: Run Composer
         run: composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader
 
-      - name: Build Codeception actors
+      - name: Build tests Actors
         run: composer tests:build
 
       - name: Run PHPStan
-        if: matrix.task == 'phpstan'
         run: composer phpstan
 
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer
+
+      - name: Run Composer
+        run: composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader
+
+      - name: Build tests Actors
+        run: composer tests:build
+
       - name: Run tests
-        if: matrix.task == 'tests'
         run: composer tests:run
-
-# name: Quality Assurance
-
-# on:
-#   push:
-#     branches:
-#       - master
-
-# jobs:
-#   phpstan:
-#     name: PHPStan
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v3
-
-#       - name: Set up PHP
-#         uses: shivammathur/setup-php@v2
-#         with:
-#           php-version: '8.4'
-#           tools: composer
-
-#       - name: Run Composer
-#         run: composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader
-
-#       - name: Build tests Actors
-#         run: composer tests:build
-
-#       - name: Run PHPStan
-#         run: composer phpstan
-
-#   tests:
-#     name: Tests
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v3
-
-#       - name: Set up PHP
-#         uses: shivammathur/setup-php@v2
-#         with:
-#           php-version: '8.4'
-#           tools: composer
-
-#       - name: Run Composer
-#         run: composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader
-
-#       - name: Build tests Actors
-#         run: composer tests:build
-
-#       - name: Run tests
-#         run: composer tests:run
