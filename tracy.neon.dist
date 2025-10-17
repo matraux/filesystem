@@ -1,4 +1,9 @@
 tracy:
+	strictMode: true
+	maxDepth: 20
+	maxLength: 1000
+	dumpTheme: light
+
 	# editor: 'vscode-insiders://vscode-remote/attached-container+%HEX container%/%file:%line'
 	# editor: 'vscode-insiders://file/%file:%line'
 	# editor: 'vscode://file/%%file%%:%%line%%'

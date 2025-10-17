@@ -1,0 +1,17 @@
+namespace: Matraux\FileSystemTest
+support_namespace: Support
+
+paths:
+  tests: tests
+  output: /tmp/codeception
+  support: tests/Support
+  data: tests/Data
+
+settings:
+  shuffle: false
+  lint: true
+  colors: true
+
+extensions:
+  enabled:
+    - Codeception\Extension\RunFailed
