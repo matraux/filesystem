@@ -1,12 +1,12 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace Matraux\FileSystemTest\Utils;
 
-use Throwable;
-use Tracy\Debugger;
-use Nette\Neon\Neon;
 use Matraux\FileSystem\File\File;
 use Matraux\FileSystem\Folder\Folder;
+use Nette\Neon\Neon;
+use Throwable;
+use Tracy\Debugger;
 
 final class Tracy
 {
@@ -21,7 +21,7 @@ final class Tracy
 
 		/** @var array{tracy?:array<string,bool|int|string>} */
 		$neon = Neon::decodeFile((string) $file);
-		if($config = $neon['tracy'] ?? null) {
+		if ($config = $neon['tracy'] ?? null) {
 			Debugger::enable(Debugger::Development);
 			foreach ($config as $property => $value) {
 				Debugger::$$property = $value;
