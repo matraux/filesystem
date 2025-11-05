@@ -31,6 +31,13 @@ class Folder implements Stringable
 		}
 	}
 
+	final public bool $exists
+	{
+		get {
+			return is_dir((string) $this->absolute);
+		}
+	}
+
 	/** @var array<int,string> */
 	final protected array $paths = [];
 
