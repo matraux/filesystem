@@ -37,4 +37,14 @@ final class FolderCest
 		$tester->assertDirectoryExists((string) $folder->absolute);
 	}
 
+	public function testFolderExists(UnitTester $tester): void
+	{
+		$folder = Folder::create($tester->temp())->addPath('existsFolder')->init();
+		FileSystem::delete((string) $folder->absolute);
+
+		$tester->assertEquals(false, $folder->exists);
+		$folder->init();
+		$tester->assertEquals(true, $folder->exists);
+	}
+
 }
