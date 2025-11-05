@@ -129,7 +129,9 @@ class Folder implements Stringable
 
 	final public function init(): static
 	{
-		FileSystem::createDir((string) $this->absolute);
+		if (!$this->exists) {
+			FileSystem::createDir((string) $this->absolute);
+		}
 
 		return $this;
 	}
