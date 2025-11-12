@@ -2,25 +2,25 @@
 
 namespace Matraux\FileSystemTest\Unit;
 
-use Matraux\FileSystem\File\File;
-use Matraux\FileSystem\Folder\Folder;
-use Matraux\FileSystemTest\Support\UnitTester;
+use Throwable;
 use Nette\Utils\Random;
 use Nette\Utils\Strings;
-use Throwable;
+use Matraux\FileSystem\File\File;
+use Matraux\FileSystemTest\FileSystem\Folder;
+use Matraux\FileSystemTest\Support\UnitTester;
 
 final class FileCest
 {
 
 	public function testFileFromPath(UnitTester $tester): void
 	{
-		File::fromPath($tester->assets() . 'fromPath.txt');
+		File::fromPath(Folder::create()->data . 'fromPath.txt');
 	}
 
 	public function testFileFromContent(UnitTester $tester): void
 	{
 		$content = Random::generate(2048);
-		$folder = Folder::create($tester->temp());
+		$folder = Folder::create()->temp;
 		File::fromContent($content, $folder);
 	}
 
@@ -31,7 +31,7 @@ final class FileCest
 			Random::generate(1024),
 			Random::generate(1024),
 		];
-		$folder = Folder::create($tester->temp());
+		$folder = Folder::create()->temp;
 		$file = File::fromContent(implode('', $contents), $folder);
 
 		$tester->assertEquals(implode('', $contents), $file->content);
@@ -44,7 +44,7 @@ final class FileCest
 	public function testFileReadSize(UnitTester $tester): void
 	{
 		$content = Random::generate(2048);
-		$folder = Folder::create($tester->temp());
+		$folder = Folder::create()->temp;
 		$file = File::fromContent($content, $folder);
 
 		$tester->assertEquals(Strings::length($content), $file->size);
@@ -53,7 +53,7 @@ final class FileCest
 
 	public function testFileDelete(UnitTester $tester): void
 	{
-		$folder = Folder::create($tester->temp());
+		$folder = Folder::create()->temp;
 		$file = File::fromContent('', $folder);
 		$file->delete();
 		$tester->expectThrowable(Throwable::class, fn () => (string) $file);

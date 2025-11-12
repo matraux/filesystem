@@ -2,11 +2,11 @@
 
 namespace Matraux\FileSystemTest\Utils;
 
-use Matraux\FileSystem\File\File;
-use Matraux\FileSystem\Folder\Folder;
-use Nette\Neon\Neon;
 use Throwable;
 use Tracy\Debugger;
+use Nette\Neon\Neon;
+use Matraux\FileSystem\File\File;
+use Matraux\FileSystemTest\FileSystem\Folder;
 
 final class Tracy
 {

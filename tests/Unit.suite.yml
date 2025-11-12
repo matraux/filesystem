@@ -3,4 +3,3 @@ actor: UnitTester
 modules:
   enabled:
     - \Codeception\Module\Asserts
-    - \Matraux\FileSystemTest\Helper\Path

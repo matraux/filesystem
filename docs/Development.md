@@ -10,17 +10,17 @@ This package includes several development tools configured via Composer scripts.
 ```bash
 composer codefixer   # Run PHP Code Style Fixer (phpcbf)
 composer codesniffer # Run PHP CodeSniffer (phpcs)
-composer stan        # Run static analysis (PHPStan)
-composer test        # Run unit tests (Tester)
-composer finalize    # Run PHPStan and tests
+composer phpstan     # Run static analysis (PHPStan)
+composer tests:build # Build unit tests
+composer tests:build # Run unit tests
 ```
 
 <br>
 
 ## Tracy debugging
 Local IDE integration for Nette Tracy is supported via optional config files.
-- `editor.tracy.neon.dist` - template config for editor integrations
-- `editor.tracy.neon` - optional local override (copied from `.dist`)
+- `tracy.neon.dist` - template config for editor integrations
+- `tracy.neon` - optional local override (copied from `.dist`)
 
 These files can be used to configure custom Tracy editor mapping.
 
@@ -29,13 +29,13 @@ These files can be used to configure custom Tracy editor mapping.
 ## PHPStan Static analysis
 The project uses PHPStan for static analysis.
 
-- `phpstan.neon` - primary config used by the command line
-- `editor.phpstan.neon.dist`- template config for editor integrations
-- `editor.phpstan.neon` - optional local override (copied from `.dist`)
+- `phpstan.core.neon` - primary config used by the command line
+- `phpstan.neon.dist`- template config for editor integrations
+- `phpstan.neon` - optional local override (copied from `.dist`)
 
 To run PHPStan:
 ```bash
-composer stan
+composer phpstan
 ```
 
 <br>
@@ -43,5 +43,6 @@ composer stan
 ## Tests
 To run all tests:
 ```bash
-composer test
+composer tests:build
+composer tests:run
 ```

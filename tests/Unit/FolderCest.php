@@ -2,9 +2,9 @@
 
 namespace Matraux\FileSystemTest\Unit;
 
-use Matraux\FileSystem\Folder\Folder;
-use Matraux\FileSystemTest\Support\UnitTester;
 use Nette\Utils\FileSystem;
+use Matraux\FileSystemTest\FileSystem\Folder;
+use Matraux\FileSystemTest\Support\UnitTester;
 
 final class FolderCest
 {
@@ -29,7 +29,7 @@ final class FolderCest
 
 	public function testFolderInit(UnitTester $tester): void
 	{
-		$folder = Folder::create($tester->temp())->addPath('initFolder');
+		$folder = Folder::create()->temp->addPath('initFolder');
 		FileSystem::delete((string) $folder->absolute);
 
 		$tester->assertDirectoryDoesNotExist((string) $folder->absolute);
@@ -39,7 +39,7 @@ final class FolderCest
 
 	public function testFolderExists(UnitTester $tester): void
 	{
-		$folder = Folder::create($tester->temp())->addPath('existsFolder')->init();
+		$folder = Folder::create()->temp->addPath('existsFolder')->init();
 		FileSystem::delete((string) $folder->absolute);
 
 		$tester->assertEquals(false, $folder->exists);
