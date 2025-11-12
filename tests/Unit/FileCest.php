@@ -2,12 +2,12 @@
 
 namespace Matraux\FileSystemTest\Unit;
 
-use Throwable;
-use Nette\Utils\Random;
-use Nette\Utils\Strings;
 use Matraux\FileSystem\File\File;
 use Matraux\FileSystemTest\FileSystem\Folder;
 use Matraux\FileSystemTest\Support\UnitTester;
+use Nette\Utils\Random;
+use Nette\Utils\Strings;
+use Throwable;
 
 final class FileCest
 {

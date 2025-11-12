@@ -2,9 +2,9 @@
 
 namespace Matraux\FileSystemTest\Unit;
 
-use Nette\Utils\FileSystem;
 use Matraux\FileSystemTest\FileSystem\Folder;
 use Matraux\FileSystemTest\Support\UnitTester;
+use Nette\Utils\FileSystem;
 
 final class FolderCest
 {
