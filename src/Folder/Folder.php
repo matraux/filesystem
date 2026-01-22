@@ -8,6 +8,7 @@ use Stringable;
 
 class Folder implements Stringable
 {
+
 	protected const string Root = './';
 
 	/**
