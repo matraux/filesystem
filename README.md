@@ -46,6 +46,7 @@ composer require matraux/filesystem
 | 1.2.2 | 8.4+ | Path resolution fix
 | 1.3.0 | 8.4+ | Folder existence check
 | 1.3.1 | 8.4+ | Improved tests path helper
+| 2.0.0 | 8.4+ | Code optimalization, removed
 
 <br>
 
@@ -62,7 +63,7 @@ See [Folder](./docs/Folder.md) for advanced instructions.
 ```php
 use Matraux\FileSystem\Folder\Folder;
 
-$folder = Folder::create()->addPath('backup');
+$folder = Folder::fromPath()->addPath('backup');
 echo $folder->absolute; // "C:\Users\MATRAUX\Webs\Resources\FileSystem\backup"
 ```
 

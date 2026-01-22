@@ -6,7 +6,7 @@ Basic usage
 ```php
 use Matraux\FileSystem\Folder\Folder;
 
-$folder = Folder::create();
+$folder = Folder::fromPath();
 echo $folder; // ".\"
 
 echo $folder->absolute; // "C:\Users\MATRAUX\Webs\Resources\FileSystem\"
@@ -39,7 +39,7 @@ final class CustomFolder extends Folder
 
 }
 
-$folder = CustomFolder::create();
+$folder = CustomFolder::fromPath();
 
 echo $folder->temp; // ".\temp\"
 
