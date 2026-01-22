@@ -2,7 +2,8 @@
 
 namespace Matraux\FileSystemTest\Unit;
 
-use Matraux\FileSystemTest\FileSystem\Folder;
+use Codeception\Configuration;
+use Matraux\FileSystem\Folder\Folder;
 use Matraux\FileSystemTest\Support\UnitTester;
 use Nette\Utils\FileSystem;
 
@@ -11,39 +12,39 @@ final class FolderCest
 
 	public function testFolderCreate(): void
 	{
-		Folder::create();
+		Folder::fromPath();
 	}
 
 	public function testFolderAbsolute(UnitTester $tester): void
 	{
-		$folder = Folder::create(__DIR__);
+		$folder = Folder::fromPath(__DIR__);
 		$tester->assertEquals(__DIR__ . DIRECTORY_SEPARATOR, (string) $folder->absolute);
 	}
 
 	public function testFolderRelative(UnitTester $tester): void
 	{
-		$folder = Folder::create(__DIR__);
-		$root = Folder::create();
+		$folder = Folder::fromPath(__DIR__);
+		$root = Folder::fromPath();
 		$tester->assertEquals((string) $folder->relative, str_replace((string) $root->absolute, '', __DIR__ . DIRECTORY_SEPARATOR));
 	}
 
 	public function testFolderInit(UnitTester $tester): void
 	{
-		$folder = Folder::create()->temp->addPath('initFolder');
+		$folder = Folder::fromPath(Configuration::outputDir())->addPath('initFolder');
 		FileSystem::delete((string) $folder->absolute);
 
 		$tester->assertDirectoryDoesNotExist((string) $folder->absolute);
-		$folder->init();
+		$folder->create();
 		$tester->assertDirectoryExists((string) $folder->absolute);
 	}
 
 	public function testFolderExists(UnitTester $tester): void
 	{
-		$folder = Folder::create()->temp->addPath('existsFolder')->init();
+		$folder = Folder::fromPath(Configuration::outputDir())->addPath('existsFolder')->create();
 		FileSystem::delete((string) $folder->absolute);
 
 		$tester->assertEquals(false, $folder->exists);
-		$folder->init();
+		$folder->create();
 		$tester->assertEquals(true, $folder->exists);
 	}
 

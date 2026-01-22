@@ -3,7 +3,7 @@
 namespace Matraux\FileSystemTest\Utils;
 
 use Matraux\FileSystem\File\File;
-use Matraux\FileSystemTest\FileSystem\Folder;
+use Matraux\FileSystem\Folder\Folder;
 use Nette\Neon\Neon;
 use Throwable;
 use Tracy\Debugger;
@@ -14,7 +14,7 @@ final class Tracy
 	public static function setup(): void
 	{
 		try {
-			$file = File::fromPath(Folder::create()->absolute . 'tracy.neon');
+			$file = File::fromPath(Folder::fromPath()->absolute . 'tracy.neon');
 		} catch (Throwable $th) {
 			return;
 		}

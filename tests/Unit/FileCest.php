@@ -2,8 +2,9 @@
 
 namespace Matraux\FileSystemTest\Unit;
 
+use Codeception\Configuration;
 use Matraux\FileSystem\File\File;
-use Matraux\FileSystemTest\FileSystem\Folder;
+use Matraux\FileSystem\Folder\Folder;
 use Matraux\FileSystemTest\Support\UnitTester;
 use Nette\Utils\Random;
 use Nette\Utils\Strings;
@@ -14,13 +15,13 @@ final class FileCest
 
 	public function testFileFromPath(UnitTester $tester): void
 	{
-		File::fromPath(Folder::create()->data . 'fromPath.txt');
+		File::fromPath(Folder::fromPath(Configuration::dataDir()) . 'fromPath.txt');
 	}
 
 	public function testFileFromContent(UnitTester $tester): void
 	{
 		$content = Random::generate(2048);
-		$folder = Folder::create()->temp;
+		$folder = Folder::fromPath(Configuration::outputDir());
 		File::fromContent($content, $folder);
 	}
 
@@ -31,7 +32,7 @@ final class FileCest
 			Random::generate(1024),
 			Random::generate(1024),
 		];
-		$folder = Folder::create()->temp;
+		$folder = Folder::fromPath(Configuration::outputDir());
 		$file = File::fromContent(implode('', $contents), $folder);
 
 		$tester->assertEquals(implode('', $contents), $file->content);
@@ -44,7 +45,7 @@ final class FileCest
 	public function testFileReadSize(UnitTester $tester): void
 	{
 		$content = Random::generate(2048);
-		$folder = Folder::create()->temp;
+		$folder = Folder::fromPath(Configuration::outputDir());
 		$file = File::fromContent($content, $folder);
 
 		$tester->assertEquals(Strings::length($content), $file->size);
@@ -53,10 +54,51 @@ final class FileCest
 
 	public function testFileDelete(UnitTester $tester): void
 	{
-		$folder = Folder::create()->temp;
+		$folder = Folder::fromPath(Configuration::outputDir());
 		$file = File::fromContent('', $folder);
 		$file->delete();
 		$tester->expectThrowable(Throwable::class, fn () => (string) $file);
+	}
+
+	public function testFileTemporary(UnitTester $tester): void
+	{
+		$folder = Folder::fromPath(Configuration::outputDir());
+		$file = File::fromContent('', $folder);
+		$file->name = 'temporary';
+		$file->extension = 'txt';
+		$file->temporary = true;
+
+		$filename = (string) $file;
+		$tester->assertFileExists($filename);
+		unset($file);
+		$tester->assertFileNotExists($filename);
+	}
+
+	public function testFileProperties(UnitTester $tester): void
+	{
+		$folder = Folder::fromPath(Configuration::outputDir());
+		$file = File::fromContent('', $folder);
+
+		$file->name = 'abcd';
+		$tester->assertEquals('abcd', $file->name);
+
+		$file->extension = 'txt';
+		$tester->assertEquals('abcd', $file->basename);
+		$tester->assertEquals('abcd.txt', $file->name);
+
+		$file->basename = 'xyz';
+		$tester->assertEquals('xyz', $file->basename);
+		$tester->assertEquals('xyz.txt', $file->name);
+
+		$file->extension = '0';
+		$tester->assertEquals('xyz', $file->basename);
+		$tester->assertEquals('xyz.0', $file->name);
+
+		$file->extension = null;
+		$tester->assertEquals('xyz', $file->basename);
+		$tester->assertEquals('xyz', $file->name);
+
+		$tester->assertEquals(Configuration::outputDir(), $file->path);
 	}
 
 }
