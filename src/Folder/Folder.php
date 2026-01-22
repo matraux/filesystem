@@ -107,7 +107,7 @@ class Folder implements Stringable
 		$this->isAbsolute = $isAbsolute;
 	}
 
-	final public static function create(string|Stringable|null $path = self::Root): static
+	final public static function fromPath(string|Stringable|null $path = self::Root): static
 	{
 		return self::getInstanceCache([(string) $path], false);
 	}
@@ -120,7 +120,7 @@ class Folder implements Stringable
 		return self::getInstanceCache($paths, $this->isAbsolute);
 	}
 
-	final public function init(): static
+	final public function create(): static
 	{
 		if (!$this->exists) {
 			if(!@mkdir((string) $this->absolute, recursive: true)) {

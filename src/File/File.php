@@ -27,7 +27,7 @@ class File implements Stringable, Countable, IteratorAggregate
 	final public string $path
 	{
 		set {
-			$this->rename(Folder::create($value) . $this->name);
+			$this->rename(Folder::fromPath($value) . $this->name);
 		}
 		get => $this->file->getPath() . DIRECTORY_SEPARATOR;
 	}
@@ -37,7 +37,7 @@ class File implements Stringable, Countable, IteratorAggregate
 	 */
 	final public string $relativePath
 	{
-		get => (string) Folder::create($this->path)->relative;
+		get => (string) Folder::fromPath($this->path)->relative;
 	}
 
 	/**
@@ -135,9 +135,9 @@ class File implements Stringable, Countable, IteratorAggregate
 	/**
 	 * Create file from existing file
 	 */
-	final public static function fromPath(string $file): static
+	final public static function fromPath(string $filepath): static
 	{
-		return new static($file);
+		return new static($filepath);
 	}
 
 	/**

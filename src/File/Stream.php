@@ -21,7 +21,7 @@ trait Stream
 	 */
 	final public static function fromStream(StreamInterface $stream, ?Folder $folder = null): static
 	{
-		$folder ??= Folder::create(sys_get_temp_dir());
+		$folder ??= Folder::fromPath(sys_get_temp_dir());
 		$folder = (string) $folder;
 
 		if (!$file = tempnam($folder, 'stream-')) {

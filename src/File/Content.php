@@ -35,7 +35,7 @@ trait Content
 	 */
 	final public static function fromContent(string $content, ?Folder $folder = null): static
 	{
-		$folder ??= Folder::create(sys_get_temp_dir());
+		$folder ??= Folder::fromPath(sys_get_temp_dir());
 		$folder = (string) $folder;
 
 		if (!$file = tempnam($folder, 'content-')) {

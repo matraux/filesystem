@@ -30,7 +30,7 @@ trait FileUpload
 	 */
 	final public static function fromFileUpload(NetteFileUpload $fileUpload, ?Folder $folder = null): static
 	{
-		$folder ??= Folder::create(sys_get_temp_dir());
+		$folder ??= Folder::fromPath(sys_get_temp_dir());
 		$folder = (string) $folder;
 
 		$file = $folder . $fileUpload->sanitizedName;
