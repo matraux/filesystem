@@ -3,11 +3,11 @@
 namespace Matraux\FileSystem\File;
 
 use Countable;
-use Stringable;
-use SplFileObject;
 use IteratorAggregate;
 use Matraux\FileSystem\Folder\Folder;
 use RuntimeException;
+use SplFileObject;
+use Stringable;
 
 /**
  * @implements IteratorAggregate<int,string>
@@ -20,20 +20,6 @@ class File implements Stringable, Countable, IteratorAggregate
 	use Size;
 	use Temporary;
 	use Stream;
-
-	final protected SplFileObject $file;
-
-	/**
-	 * @throws RuntimeException If can not rename file
-	 */
-	final protected function rename(string $name): void
-	{
-		if (!@rename((string) $this, $name)) {
-			throw new RuntimeException(sprintf('Unable to rename file "%s" to "%s".', (string) $this, $name));
-		}
-
-		$this->init($name);
-	}
 
 	/**
 	 * Absolute directory path
@@ -90,7 +76,7 @@ class File implements Stringable, Countable, IteratorAggregate
 	final public ?string $extension
 	{
 		set {
-			if($value) {
+			if ($value) {
 				$value = ltrim($value, '.');
 			}
 
@@ -132,6 +118,8 @@ class File implements Stringable, Countable, IteratorAggregate
 		}
 	}
 
+	final protected SplFileObject $file;
+
 	/**
 	 * @throws RuntimeException If can not open file
 	 */
@@ -145,11 +133,19 @@ class File implements Stringable, Countable, IteratorAggregate
 	}
 
 	/**
+	 * Create file from existing file
+	 */
+	final public static function fromPath(string $file): static
+	{
+		return new static($file);
+	}
+
+	/**
 	 * @throws RuntimeException If can not delete file
 	 */
 	final public function delete(): void
 	{
-		if(!@unlink((string) $this)) {
+		if (!@unlink((string) $this)) {
 			throw new RuntimeException(sprintf('Unable to delete file "%s".', (string) $this));
 		}
 
@@ -157,12 +153,15 @@ class File implements Stringable, Countable, IteratorAggregate
 	}
 
 	/**
-	 * Create file from existing file
-	 *
+	 * @throws RuntimeException If can not rename file
 	 */
-	final public static function fromPath(string $file): static
+	final protected function rename(string $name): void
 	{
-		return new static($file);
+		if (!@rename((string) $this, $name)) {
+			throw new RuntimeException(sprintf('Unable to rename file "%s" to "%s".', (string) $this, $name));
+		}
+
+		$this->init($name);
 	}
 
 	private function init(string $file): void

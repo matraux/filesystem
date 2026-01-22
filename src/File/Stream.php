@@ -31,8 +31,8 @@ trait Stream
 		}
 
 		while (!$stream->eof()) {
-			if(fwrite($handle, $stream->read(self::StreamDataPart)) === false) {
-				throw new RuntimeException(sprintf('Unable to write file "%s".',$file));
+			if (fwrite($handle, $stream->read(self::StreamDataPart)) === false) {
+				throw new RuntimeException(sprintf('Unable to write file "%s".', $file));
 			}
 		}
 
