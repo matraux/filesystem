@@ -20,7 +20,7 @@
 		<properties>
 			<property name="rootNamespaces" type="array">
 				<element key="src" value="Matraux\FileSystem"/>
-				<element key="tests" value="Matraux\FileSystemTest"/>
+				<element key="tests" value="Matraux\FileSystem\Test"/>
 			</property>
 		</properties>
 	</rule>

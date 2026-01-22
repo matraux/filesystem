@@ -1,11 +1,11 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\FileSystemTest\Unit;
+namespace Matraux\FileSystem\Test\Unit;
 
+use Nette\Utils\FileSystem;
 use Codeception\Configuration;
 use Matraux\FileSystem\Folder\Folder;
-use Matraux\FileSystemTest\Support\UnitTester;
-use Nette\Utils\FileSystem;
+use Matraux\FileSystem\Test\Support\UnitTester;
 
 final class FolderCest
 {

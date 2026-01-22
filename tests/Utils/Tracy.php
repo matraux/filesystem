@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\FileSystemTest\Utils;
+namespace Matraux\FileSystem\Test\Utils;
 
 use Matraux\FileSystem\File\File;
 use Matraux\FileSystem\Folder\Folder;

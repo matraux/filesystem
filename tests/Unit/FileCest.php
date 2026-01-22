@@ -1,14 +1,14 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\FileSystemTest\Unit;
+namespace Matraux\FileSystem\Test\Unit;
 
+use Throwable;
+use Nette\Utils\Random;
+use Nette\Utils\Strings;
 use Codeception\Configuration;
 use Matraux\FileSystem\File\File;
 use Matraux\FileSystem\Folder\Folder;
-use Matraux\FileSystemTest\Support\UnitTester;
-use Nette\Utils\Random;
-use Nette\Utils\Strings;
-use Throwable;
+use Matraux\FileSystem\Test\Support\UnitTester;
 
 final class FileCest
 {

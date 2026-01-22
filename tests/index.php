@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\FileSystemTest;
+namespace Matraux\FileSystem\Test;
 
-use Matraux\FileSystemTest\Utils\Tracy;
 use Tracy\Debugger;
+use Matraux\FileSystem\Test\Utils\Tracy;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
