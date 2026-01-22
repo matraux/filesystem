@@ -2,8 +2,8 @@
 
 namespace Matraux\FileSystem\Test;
 
-use Tracy\Debugger;
 use Matraux\FileSystem\Test\Utils\Tracy;
+use Tracy\Debugger;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

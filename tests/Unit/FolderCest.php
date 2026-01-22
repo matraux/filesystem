@@ -2,10 +2,10 @@
 
 namespace Matraux\FileSystem\Test\Unit;
 
-use Nette\Utils\FileSystem;
 use Codeception\Configuration;
 use Matraux\FileSystem\Folder\Folder;
 use Matraux\FileSystem\Test\Support\UnitTester;
+use Nette\Utils\FileSystem;
 
 final class FolderCest
 {
