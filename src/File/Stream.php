@@ -2,11 +2,9 @@
 
 namespace Matraux\FileSystem\File;
 
-use Matraux\FileSystem\Exception\FileContentException;
 use Matraux\FileSystem\Folder\Folder;
-use Nette\IOException;
-use Nette\Utils\FileSystem;
 use Psr\Http\Message\StreamInterface;
+use RuntimeException;
 
 /**
  * @mixin File
@@ -19,24 +17,23 @@ trait Stream
 	/**
 	 * Create file from PSR Response
 	 *
-	 * @throws FileContentException
-	 * @throws IOException
+	 * @throws RuntimeException
 	 */
 	final public static function fromStream(StreamInterface $stream, ?Folder $folder = null): static
 	{
-		$folder ??= Folder::create()->addPath('temp')->addPath('file');
+		$folder ??= Folder::create(sys_get_temp_dir());
 		$folder = (string) $folder;
 
-		FileSystem::createDir($folder);
-
 		if (!$file = tempnam($folder, 'stream-')) {
-			throw new FileContentException('Unable to create temporary file.');
+			throw new RuntimeException('Unable to create temporary file.');
 		} elseif (!$handle = fopen($file, 'w')) {
-			throw new FileContentException(sprintf('Unable to open temporary file "%s".', $file));
+			throw new RuntimeException(sprintf('Unable to open temporary file "%s".', $file));
 		}
 
 		while (!$stream->eof()) {
-			fwrite($handle, $stream->read(self::StreamDataPart));
+			if(fwrite($handle, $stream->read(self::StreamDataPart)) === false) {
+				throw new RuntimeException(sprintf('Unable to write file "%s".',$file));
+			}
 		}
 
 		fclose($handle);

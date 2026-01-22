@@ -2,39 +2,25 @@
 
 namespace Matraux\FileSystem\File;
 
+use Throwable;
+
 /**
  * @mixin File
  */
 trait Temporary
 {
 
-	/**
-	 * File will be removed on shutdown
-	 */
-	final public bool $temporary
+	final public bool $temporary = false;
+
+	public function __destruct()
 	{
-		set(bool $temporary) {
-			$this->temporary = $temporary;
+		if ($this->temporary) {
+			try {
+				$this->delete();
+			} catch (Throwable $th) {
 
-			if ($this->shutdownRegister) {
-				return;
 			}
-
-			$this->shutdownRegister = true;
-
-			register_shutdown_function(function (self $file): void {
-				if (!$file->temporary) {
-					return;
-				}
-
-				$file->delete();
-			}, $this);
-		}
-		get {
-			return $this->temporary;
 		}
 	}
-
-	private bool $shutdownRegister = false;
 
 }

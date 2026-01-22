@@ -12,8 +12,7 @@
 		}
 	],
 	"require": {
-		"php": "^8.4",
-		"nette/utils": "^4.0"
+		"php": "^8.4"
 	},
 	"suggest": {
 		"nette/http": "Required only if you use HTTP-specific features like Request, Session etc.",

@@ -3,10 +3,8 @@
 namespace Matraux\FileSystem\File;
 
 use IteratorAggregate;
-use Matraux\FileSystem\Exception\FileContentException;
 use Matraux\FileSystem\Folder\Folder;
-use Nette\IOException;
-use Nette\Utils\FileSystem;
+use RuntimeException;
 use Traversable;
 
 /**
@@ -24,43 +22,44 @@ trait Content
 	final public string $content
 	{
 		get {
-			return FileSystem::read((string) $this);
+			$content = @file_get_contents((string) $this);
+
+			return $content !== false ? $content : throw new RuntimeException(sprintf('Unable to read file "%s".', (string) $this));
 		}
 	}
 
 	/**
 	 * Create file from content
 	 *
-	 * @throws FileContentException
-	 * @throws IOException
+	 * @throws RuntimeException
 	 */
 	final public static function fromContent(string $content, ?Folder $folder = null): static
 	{
-		$folder ??= Folder::create()->addPath('temp')->addPath('file');
+		$folder ??= Folder::create(sys_get_temp_dir());
 		$folder = (string) $folder;
 
-		FileSystem::createDir($folder);
-
 		if (!$file = tempnam($folder, 'content-')) {
-			throw new FileContentException(sprintf('Unable to create temporary file in directory "%s".', $folder));
+			throw new RuntimeException(sprintf('Unable to create temporary file in folder "%s".', $folder));
 		}
 
-		FileSystem::write($file, $content);
+		if (@file_put_contents($file, $content) === false) {
+			throw new RuntimeException(sprintf('Unable to write file "%s".', $file));
+		}
 
 		return new static($file);
 	}
 
 	/**
-	 * @throws FileContentException
+	 * @throws RuntimeException
 	 */
 	final public function getIterator(): Traversable
 	{
 		$this->file->rewind();
 
-		while ($this->size > $this->file->ftell()) {
+		while ($this->file->ftell() !== false && $this->size > $this->file->ftell()) {
 			$content = $this->file->fread(self::ContentDataPart);
 			if ($content === false) {
-				throw new FileContentException(sprintf('Unable to read from file "%s".', (string) $this));
+				throw new RuntimeException(sprintf('Unable to read from file "%s".', (string) $this));
 			}
 
 			yield $content;

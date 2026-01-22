@@ -3,8 +3,7 @@
 namespace Matraux\FileSystem\Folder;
 
 use Composer\InstalledVersions;
-use Matraux\FileSystem\Exception\FolderRootException;
-use Nette\Utils\FileSystem;
+use RuntimeException;
 use Stringable;
 
 class Folder implements Stringable
@@ -16,9 +15,7 @@ class Folder implements Stringable
 	 */
 	final public self $absolute
 	{
-		get {
-			return $this->absolute ??= self::getInstanceCache($this->paths, true);
-		}
+		get => $this->absolute ??= self::getInstanceCache($this->paths, true);
 	}
 
 	/**
@@ -26,16 +23,12 @@ class Folder implements Stringable
 	 */
 	final public self $relative
 	{
-		get {
-			return $this->relative ??= self::getInstanceCache($this->paths, false);
-		}
+		get => $this->relative ??= self::getInstanceCache($this->paths, false);
 	}
 
 	final public bool $exists
 	{
-		get {
-			return is_dir((string) $this->absolute);
-		}
+		get => is_dir((string) $this->absolute);
 	}
 
 	/** @var array<int,string> */
@@ -75,7 +68,7 @@ class Folder implements Stringable
 			}
 
 			if (!$root) {
-				throw new FolderRootException('Unable to resolve root directory.');
+				throw new RuntimeException('Unable to resolve root directory.');
 			}
 
 			return self::$rootCache = self::normalizePath($root);
@@ -92,7 +85,7 @@ class Folder implements Stringable
 			$path = implode(DIRECTORY_SEPARATOR, $this->paths);
 			$path = self::normalizePath($path);
 
-			if ($this->isAbsolute && !str_starts_with($path, $this->root) && !FileSystem::isAbsolute($path)) {
+			if ($this->isAbsolute && !str_starts_with($path, $this->root) && !(bool) preg_match('#([a-z]:)?[/\\\]|[a-z][a-z0-9+.-]*://#Ai', $path)) {
 				$path = self::normalizePath($this->root . DIRECTORY_SEPARATOR . $path);
 			} elseif (!$this->isAbsolute && str_starts_with($path, $this->root)) {
 				$path = substr($path, strlen($this->root));
@@ -130,7 +123,9 @@ class Folder implements Stringable
 	final public function init(): static
 	{
 		if (!$this->exists) {
-			FileSystem::createDir((string) $this->absolute);
+			if(!@mkdir((string) $this->absolute, recursive: true)) {
+				throw new RuntimeException(sprintf('Unable to create directory "%s".', (string) $this->absolute));
+			}
 		}
 
 		return $this;

@@ -6,10 +6,8 @@ use Countable;
 use Stringable;
 use SplFileObject;
 use IteratorAggregate;
-use Nette\Utils\Strings;
-use Nette\Utils\FileSystem;
 use Matraux\FileSystem\Folder\Folder;
-use Matraux\FileSystem\Exception\FileNotFoundException;
+use RuntimeException;
 
 /**
  * @implements IteratorAggregate<int,string>
@@ -26,17 +24,26 @@ class File implements Stringable, Countable, IteratorAggregate
 	final protected SplFileObject $file;
 
 	/**
+	 * @throws RuntimeException If can not rename file
+	 */
+	final protected function rename(string $name): void
+	{
+		if (!@rename((string) $this, $name)) {
+			throw new RuntimeException(sprintf('Unable to rename file "%s" to "%s".', (string) $this, $name));
+		}
+
+		$this->init($name);
+	}
+
+	/**
 	 * Absolute directory path
 	 */
 	final public string $path
 	{
-		set(string $path){
-			FileSystem::rename((string) $this, $path . $this->name);
-			$this->initFile($path . $this->name);
+		set {
+			$this->rename(Folder::create($value) . $this->name);
 		}
-		get {
-			return $this->file->getPath() . DIRECTORY_SEPARATOR;
-		}
+		get => $this->file->getPath() . DIRECTORY_SEPARATOR;
 	}
 
 	/**
@@ -44,9 +51,7 @@ class File implements Stringable, Countable, IteratorAggregate
 	 */
 	final public string $relativePath
 	{
-		get {
-			return (string) Folder::create($this->file->getPath())->relative;
-		}
+		get => (string) Folder::create($this->path)->relative;
 	}
 
 	/**
@@ -54,9 +59,7 @@ class File implements Stringable, Countable, IteratorAggregate
 	 */
 	final public string $webPath
 	{
-		get {
-			return Strings::replace($this->relativePath, '~\\\\~', '/');
-		}
+		get => (string) preg_replace('~\\\\~', '/', $this->relativePath);
 	}
 
 	/**
@@ -64,26 +67,21 @@ class File implements Stringable, Countable, IteratorAggregate
 	 */
 	final public string $name
 	{
-		set(string $name) {
-			FileSystem::rename((string) $this, $this->path . $name);
-			$this->initFile($this->path . $name);
+		set {
+			$this->rename($this->path . $value);
 		}
-		get {
-			return $this->file->getFilename();
-		}
+		get => $this->file->getFilename();
 	}
 
 	/**
 	 * File name without extension
 	 */
-	final public string $basename {
-		set(string $basename) {
-			FileSystem::rename((string) $this, $this->path . $basename . '.' . $this->extension);
-			$this->initFile($this->path . $basename . '.' . $this->extension);
+	final public string $basename
+	{
+		set {
+			$this->extension !== null ? $this->rename($this->path . $value . '.' . $this->extension) : $this->rename($this->path . $value);
 		}
-		get {
-			return $this->file->getBasename('.' . $this->extension);
-		}
+		get => $this->extension !== null ? $this->file->getBasename('.' . $this->extension) : $this->file->getBasename();
 	}
 
 	/**
@@ -91,13 +89,17 @@ class File implements Stringable, Countable, IteratorAggregate
 	 */
 	final public ?string $extension
 	{
-		set(?string $extension) {
-			$this->name = Strings::replace($this->name, '~\.' . $this->file->getExtension() . '$~') . '.' . $extension;
+		set {
+			if($value) {
+				$value = ltrim($value, '.');
+			}
+
+			$this->name = $value === null || $value === '' ? $this->basename : $this->basename . '.' . $value;
 		}
 		get {
 			$extension = $this->file->getExtension();
 
-			return !empty($extension) ? $extension : null;
+			return $extension !== '' ? $extension : null;
 		}
 	}
 
@@ -111,7 +113,10 @@ class File implements Stringable, Countable, IteratorAggregate
 				return null;
 			}
 
-			return finfo_file($finfo, (string) $this) ?: null;
+			$type = finfo_file($finfo, (string) $this);
+			finfo_close($finfo);
+
+			return $type ?: null;
 		}
 	}
 
@@ -128,20 +133,26 @@ class File implements Stringable, Countable, IteratorAggregate
 	}
 
 	/**
-	 * @throws FileNotFoundException If can not open file
+	 * @throws RuntimeException If can not open file
 	 */
-	final private function __construct(string $file)
+	final protected function __construct(string $file)
 	{
 		if (!is_file($file)) {
-			throw new FileNotFoundException(sprintf('Failed to open file: No such file "%s".', $file));
+			throw new RuntimeException(sprintf('Failed to open file: No such file "%s".', $file));
 		}
 
-		$this->initFile($file);
+		$this->init($file);
 	}
 
+	/**
+	 * @throws RuntimeException If can not delete file
+	 */
 	final public function delete(): void
 	{
-		FileSystem::delete((string) $this);
+		if(!@unlink((string) $this)) {
+			throw new RuntimeException(sprintf('Unable to delete file "%s".', (string) $this));
+		}
+
 		unset($this->file);
 	}
 
@@ -154,7 +165,7 @@ class File implements Stringable, Countable, IteratorAggregate
 		return new static($file);
 	}
 
-	private function initFile(string $file): void
+	private function init(string $file): void
 	{
 		$this->file = new SplFileObject($file, 'r');
 	}

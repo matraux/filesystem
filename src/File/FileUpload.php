@@ -2,10 +2,9 @@
 
 namespace Matraux\FileSystem\File;
 
+use RuntimeException;
 use Matraux\FileSystem\Folder\Folder;
 use Nette\Http\FileUpload as NetteFileUpload;
-use Nette\IOException;
-use Nette\Utils\FileSystem;
 
 /**
  * @mixin File
@@ -28,18 +27,21 @@ trait FileUpload
 
 	/**
 	 * Create file from FileUpload
-	 *
-	 * @throws IOException If can not create temporary dir
 	 */
 	final public static function fromFileUpload(NetteFileUpload $fileUpload, ?Folder $folder = null): static
 	{
-		$folder ??= Folder::create()->addPath('temp')->addPath('file');
+		$folder ??= Folder::create(sys_get_temp_dir());
 		$folder = (string) $folder;
 
 		$file = $folder . $fileUpload->sanitizedName;
-		FileSystem::createDir($folder);
-		FileSystem::rename($fileUpload->temporaryFile, $file);
-		FileSystem::makeWritable(path: $file, fileMode: 0644);
+
+		if (!@rename($fileUpload->temporaryFile, $file)) {
+			throw new RuntimeException(sprintf('Unable to rename file "%s" to "%s".', $fileUpload->temporaryFile, $file));
+		}
+
+		if(!@chmod($file, 0644)) {
+			throw new RuntimeException(sprintf('Unable to chmod file "%s" to mode %s.', $file, 0644));
+		}
 
 		return new static($file);
 	}
