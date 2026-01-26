@@ -146,7 +146,9 @@ class File implements Stringable, Countable, IteratorAggregate
 	final public function delete(): void
 	{
 		if (!@unlink((string) $this)) {
-			throw new RuntimeException(sprintf('Unable to delete file "%s".', (string) $this));
+			$message = error_get_last()['message'] ?? null;
+
+			throw new RuntimeException(sprintf('Unable to delete file "%s". %s', (string) $this, $message));
 		}
 
 		unset($this->file);
@@ -158,7 +160,9 @@ class File implements Stringable, Countable, IteratorAggregate
 	final protected function rename(string $name): void
 	{
 		if (!@rename((string) $this, $name)) {
-			throw new RuntimeException(sprintf('Unable to rename file "%s" to "%s".', (string) $this, $name));
+			$message = error_get_last()['message'] ?? null;
+
+			throw new RuntimeException(sprintf('Unable to rename file "%s" to "%s". %s', (string) $this, $name, $message));
 		}
 
 		$this->init($name);
