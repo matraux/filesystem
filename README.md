@@ -46,7 +46,7 @@ composer require matraux/filesystem
 | 1.2.2 | 8.4+ | Path resolution fix
 | 1.3.0 | 8.4+ | Folder existence check
 | 1.3.1 | 8.4+ | Improved tests path helper
-| 2.0.0 | 8.4+ | Code optimalization, removed
+| 2.0.0 | 8.4+ | Code optimalization, removed dependencies
 
 <br>
 
