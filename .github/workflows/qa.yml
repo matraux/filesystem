@@ -6,24 +6,24 @@ on:
       - master
 
 jobs:
-  codefixer:
-    name: Codefixer
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+  # codefixer:
+  #   name: Codefixer
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
 
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-          tools: composer
+  #     - name: Set up PHP
+  #       uses: shivammathur/setup-php@v2
+  #       with:
+  #         php-version: '8.4'
+  #         tools: composer
 
-      - name: Run Composer
-        run: composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader
+  #     - name: Run Composer
+  #       run: composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader
 
-      - name: Run Codefixer
-        run: composer codefixer
+  #     - name: Run Codefixer
+  #       run: composer codefixer
 
   phpstan:
     name: PHPStan
