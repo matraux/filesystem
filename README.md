@@ -37,16 +37,9 @@ composer require matraux/filesystem
 ## Requirements
 | version | PHP | Note
 |----|---|---
-| 1.0.0 | 8.3+ | Initial commit
-| 1.0.9 | 8.3+ | Cache optimization
-| 1.1.1 | 8.4+ | Property accessor
-| 1.1.2 | 8.4+ | Quality Assurance
-| 1.1.4 | 8.4+ | Docs update
-| 1.2.1 | 8.4+ | Performance boost via cache
-| 1.2.2 | 8.4+ | Path resolution fix
-| 1.3.0 | 8.4+ | Folder existence check
-| 1.3.1 | 8.4+ | Improved tests path helper
-| 2.0.0 | 8.4+ | Code optimalization, removed dependencies
+| 1.0.0 | 7.4+ | Support PHP 7.4
+| 2.0.0 | 8.3+ | Support PHP 8.3
+| 3.0.0 | 8.4+ | Support PHP 8.4
 
 <br>
 
