@@ -167,6 +167,7 @@ class File implements Stringable, Countable, IteratorAggregate
 		return match ($name) {
 			'path' => $this->getPath(),
 			'relativePath' => $this->getRelativePath(),
+			'webPath' => $this->getWebPath(),
 			'name' => $this->getName(),
 			'basename' => $this->getBasename(),
 			'extension' => $this->getExtension(),
