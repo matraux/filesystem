@@ -61,7 +61,7 @@ class File implements Stringable, Countable, IteratorAggregate
 			throw new RuntimeException(sprintf('Unable to delete file "%s". %s', (string) $this, $message));
 		}
 
-		unset($this->file); // @phpstan-ignore
+		unset($this->file); // @phpstan-ignore-line
 	}
 
 	final protected function setPath(string $value): void
