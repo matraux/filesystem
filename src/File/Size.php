@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\FileSystem\File;
 
@@ -9,13 +9,11 @@ use RuntimeException;
  */
 trait Size
 {
-
 	/**
 	 * @var int<0,max> file size in bytes
 	 * @throws RuntimeException
 	 */
-	final public int $size
-	{
+	final public int $size {
 		get {
 			$size = $this->file->getSize();
 
@@ -31,5 +29,4 @@ trait Size
 	{
 		return $this->size;
 	}
-
 }

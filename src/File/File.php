@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\FileSystem\File;
 
@@ -14,7 +14,6 @@ use Stringable;
  */
 class File implements Stringable, Countable, IteratorAggregate
 {
-
 	use FileUpload;
 	use Content;
 	use Size;
@@ -24,8 +23,7 @@ class File implements Stringable, Countable, IteratorAggregate
 	/**
 	 * Absolute directory path
 	 */
-	final public string $path
-	{
+	final public string $path {
 		set {
 			$this->rename(Folder::fromPath($value) . $this->name);
 		}
@@ -35,24 +33,21 @@ class File implements Stringable, Countable, IteratorAggregate
 	/**
 	 * Relative directory path
 	 */
-	final public string $relativePath
-	{
+	final public string $relativePath {
 		get => (string) Folder::fromPath($this->path)->relative;
 	}
 
 	/**
 	 * Relative directory path for browser
 	 */
-	final public string $webPath
-	{
+	final public string $webPath {
 		get => (string) preg_replace('~\\\\~', '/', $this->relativePath);
 	}
 
 	/**
 	 * File name
 	 */
-	final public string $name
-	{
+	final public string $name {
 		set {
 			$this->rename($this->path . $value);
 		}
@@ -62,8 +57,7 @@ class File implements Stringable, Countable, IteratorAggregate
 	/**
 	 * File name without extension
 	 */
-	final public string $basename
-	{
+	final public string $basename {
 		set {
 			$this->extension !== null ? $this->rename($this->path . $value . '.' . $this->extension) : $this->rename($this->path . $value);
 		}
@@ -73,8 +67,7 @@ class File implements Stringable, Countable, IteratorAggregate
 	/**
 	 * File extension
 	 */
-	final public ?string $extension
-	{
+	final public ?string $extension {
 		set {
 			if ($value) {
 				$value = ltrim($value, '.');
@@ -92,8 +85,7 @@ class File implements Stringable, Countable, IteratorAggregate
 	/**
 	 * File MIME type
 	 */
-	final public ?string $type
-	{
+	final public ?string $type {
 		get {
 			if (!$finfo = finfo_open(FILEINFO_MIME_TYPE)) {
 				return null;
@@ -109,8 +101,7 @@ class File implements Stringable, Countable, IteratorAggregate
 	/**
 	 * File MTime
 	 */
-	final public ?int $mTime
-	{
+	final public ?int $mTime {
 		get {
 			$mTime = $this->file->getMTime();
 
@@ -177,5 +168,4 @@ class File implements Stringable, Countable, IteratorAggregate
 	{
 		return $this->path . $this->name;
 	}
-
 }

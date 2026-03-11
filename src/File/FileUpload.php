@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\FileSystem\File;
 
@@ -11,9 +11,7 @@ use RuntimeException;
  */
 trait FileUpload
 {
-
-	final public NetteFileUpload $fileUpload
-	{
+	final public NetteFileUpload $fileUpload {
 		get {
 			return new NetteFileUpload([
 				'name' => $this->name,
@@ -45,5 +43,4 @@ trait FileUpload
 
 		return new static($file);
 	}
-
 }

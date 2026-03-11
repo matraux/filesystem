@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\FileSystem\Test\Unit;
 
@@ -12,7 +12,6 @@ use Throwable;
 
 final class FileCest
 {
-
 	public function testFileFromPath(UnitTester $tester): void
 	{
 		File::fromPath(Folder::fromPath(Configuration::dataDir()) . 'fromPath.txt');
@@ -57,7 +56,7 @@ final class FileCest
 		$folder = Folder::fromPath(Configuration::outputDir());
 		$file = File::fromContent('', $folder);
 		$file->delete();
-		$tester->expectThrowable(Throwable::class, fn () => (string) $file);
+		$tester->expectThrowable(Throwable::class, fn() => (string) $file);
 	}
 
 	public function testFileTemporary(UnitTester $tester): void
@@ -100,5 +99,4 @@ final class FileCest
 
 		$tester->assertEquals(Configuration::outputDir(), $file->path);
 	}
-
 }

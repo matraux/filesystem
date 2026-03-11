@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\FileSystem\Test\Unit;
 
@@ -9,7 +9,6 @@ use Nette\Utils\FileSystem;
 
 final class FolderCest
 {
-
 	public function testFolderCreate(): void
 	{
 		Folder::fromPath();
@@ -47,5 +46,4 @@ final class FolderCest
 		$folder->create();
 		$tester->assertEquals(true, $folder->exists);
 	}
-
 }

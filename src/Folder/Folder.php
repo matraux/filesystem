@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\FileSystem\Folder;
 
@@ -8,27 +8,23 @@ use Stringable;
 
 class Folder implements Stringable
 {
-
 	protected const string Root = './';
 
 	/**
 	 * Will be printed as absolute path
 	 */
-	final public self $absolute
-	{
+	final public self $absolute {
 		get => $this->absolute ??= self::getInstanceCache($this->paths, true);
 	}
 
 	/**
 	 * Will be printed as relative path
 	 */
-	final public self $relative
-	{
+	final public self $relative {
 		get => $this->relative ??= self::getInstanceCache($this->paths, false);
 	}
 
-	final public bool $exists
-	{
+	final public bool $exists {
 		get => is_dir((string) $this->absolute);
 	}
 
@@ -37,8 +33,7 @@ class Folder implements Stringable
 
 	final protected bool $isAbsolute = false;
 
-	final protected string $root
-	{
+	final protected string $root {
 		get {
 			if (isset(self::$rootCache)) {
 				return self::$rootCache;
@@ -76,8 +71,7 @@ class Folder implements Stringable
 		}
 	}
 
-	final protected string $print
-	{
+	final protected string $print {
 		get {
 			if (isset($this->print)) {
 				return $this->print;
@@ -124,7 +118,7 @@ class Folder implements Stringable
 	final public function create(): static
 	{
 		if (!$this->exists) {
-			if(!@mkdir((string) $this->absolute, recursive: true)) {
+			if (!@mkdir((string) $this->absolute, recursive: true)) {
 				throw new RuntimeException(sprintf('Unable to create directory "%s".', (string) $this->absolute));
 			}
 		}
@@ -164,5 +158,4 @@ class Folder implements Stringable
 	{
 		return $this->print;
 	}
-
 }

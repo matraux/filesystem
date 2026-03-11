@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\FileSystem\File;
 
@@ -13,14 +13,12 @@ use Traversable;
  */
 trait Content
 {
-
 	final protected const int ContentDataPart = 1024;
 
 	/**
 	 * Whole content of file
 	 */
-	final public string $content
-	{
+	final public string $content {
 		get {
 			$content = @file_get_contents((string) $this);
 
@@ -65,5 +63,4 @@ trait Content
 			yield $content;
 		}
 	}
-
 }

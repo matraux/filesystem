@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\FileSystem\File;
 
@@ -11,7 +11,6 @@ use RuntimeException;
  */
 trait Stream
 {
-
 	final protected const int StreamDataPart = 1024;
 
 	/**
@@ -40,5 +39,4 @@ trait Stream
 
 		return new static($file);
 	}
-
 }
