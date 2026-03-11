@@ -53,8 +53,8 @@
 		"tests:run": "vendor/bin/codecept run"
 	},
 	"scripts-descriptions": {
-		"codecheck": "Check code style",
-		"codefix": "Fix code style",
+		"cs:check": "Check code style",
+		"cs:fix": "Fix code style",
 		"phpstan": "Static code analysis",
 		"tests:build": "Build Codeception actors",
 		"tests:run": "Run Codeception tests"
