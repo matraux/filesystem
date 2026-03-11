@@ -46,8 +46,8 @@
 		}
 	},
 	"scripts": {
-		"codecheck": "vendor/bin/php-cs-fixer check",
-		"codefix": "vendor/bin/php-cs-fixer fix",
+		"cs:check": "vendor/bin/php-cs-fixer check",
+		"cs:fix": "vendor/bin/php-cs-fixer fix",
 		"phpstan": "vendor/bin/phpstan analyse --ansi",
 		"tests:build": "vendor/bin/codecept build",
 		"tests:run": "vendor/bin/codecept run"
