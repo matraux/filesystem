@@ -5,7 +5,7 @@ paths:
   tests: tests
   output: /tmp/codeception
   support: tests/Support
-  data: tests/Data
+  data: tests/data
 
 settings:
   shuffle: false
