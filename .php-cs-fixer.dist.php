@@ -54,7 +54,7 @@ return (new Config())
 			],
 		],
 	])
-	->setFinder(new Finder()->in([
+	->setFinder((new Finder())->in([
 		__DIR__ . '/src',
 		__DIR__ . '/tests',
 	]))
