@@ -9,7 +9,7 @@ use Throwable;
  */
 trait Temporary
 {
-	final public bool $temporary = false;
+	public bool $temporary = false;
 
 	public function __destruct()
 	{

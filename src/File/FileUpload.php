@@ -8,11 +8,11 @@ use RuntimeException;
 
 /**
  * @mixin File
+ * @property-read NetteFileUpload $fileUpload
  */
 trait FileUpload
 {
-	final public NetteFileUpload $fileUpload {
-		get {
+	protected function getFileUpload(): NetteFileUpload {
 			return new NetteFileUpload([
 				'name' => $this->name,
 				'type' => $this->type,
@@ -20,7 +20,6 @@ trait FileUpload
 				'tmp_name' => (string) $this,
 				'error' => 0,
 			]);
-		}
 	}
 
 	/**

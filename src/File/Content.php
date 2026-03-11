@@ -10,6 +10,7 @@ use Traversable;
 /**
  * @mixin File
  * @implements IteratorAggregate<int,string>
+ * @property-read string $content
  */
 trait Content
 {
@@ -18,12 +19,10 @@ trait Content
 	/**
 	 * Whole content of file
 	 */
-	final public string $content {
-		get {
+	protected function getContent(): string {
 			$content = @file_get_contents((string) $this);
 
 			return $content !== false ? $content : throw new RuntimeException(sprintf('Unable to read file "%s".', (string) $this));
-		}
 	}
 
 	/**

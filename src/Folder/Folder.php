@@ -6,35 +6,48 @@ use Composer\InstalledVersions;
 use RuntimeException;
 use Stringable;
 
+/**
+ * @property-read self $absolute Will be printed as absolute path
+ * @property-read self $relative Will be printed as relative path
+ * @property-read bool $exists
+ */
 class Folder implements Stringable
 {
 	protected const string Root = './';
 
+	public function __get(string $name): mixed
+	{
+		return match ($name) {
+			'absolute' => $this->cacheAbsolute ??= self::getInstanceCache($this->paths, true),
+			'relative' => $this->cacheRelative ??= self::getInstanceCache($this->paths, false),
+			'exists' => $this->getExists(),
+			default => throw new RuntimeException(sprintf('Undefined property $%s', $name)),
+		};
+	}
+
 	/**
 	 * Will be printed as absolute path
 	 */
-	final public self $absolute {
-		get => $this->absolute ??= self::getInstanceCache($this->paths, true);
-	}
+	protected self $cacheAbsolute;
 
 	/**
 	 * Will be printed as relative path
 	 */
-	final public self $relative {
-		get => $this->relative ??= self::getInstanceCache($this->paths, false);
+	protected self $cacheRelative;
+
+	final protected function getExists(): bool
+	{
+		return is_dir((string) $this->absolute);
 	}
 
-	final public bool $exists {
-		get => is_dir((string) $this->absolute);
-	}
 
 	/** @var array<int,string> */
-	final protected array $paths = [];
+	protected array $paths = [];
 
-	final protected bool $isAbsolute = false;
+	protected bool $isAbsolute = false;
 
-	final protected string $root {
-		get {
+	protected function getRoot(): string {
+
 			if (isset(self::$rootCache)) {
 				return self::$rootCache;
 			}
@@ -68,11 +81,13 @@ class Folder implements Stringable
 			}
 
 			return self::$rootCache = self::normalizePath($root);
-		}
 	}
 
-	final protected string $print {
-		get {
+	protected string $print;
+
+	protected function print(): string
+	{
+
 			if (isset($this->print)) {
 				return $this->print;
 			}
@@ -80,14 +95,14 @@ class Folder implements Stringable
 			$path = implode(DIRECTORY_SEPARATOR, $this->paths);
 			$path = self::normalizePath($path);
 
-			if ($this->isAbsolute && !str_starts_with($path, $this->root) && !(bool) preg_match('#([a-z]:)?[/\\\]|[a-z][a-z0-9+.-]*://#Ai', $path)) {
-				$path = self::normalizePath($this->root . DIRECTORY_SEPARATOR . $path);
-			} elseif (!$this->isAbsolute && str_starts_with($path, $this->root)) {
-				$path = substr($path, strlen($this->root));
+			if ($this->isAbsolute && !str_starts_with($path, $this->getRoot()) && !(bool) preg_match('#([a-z]:)?[/\\\]|[a-z][a-z0-9+.-]*://#Ai', $path)) {
+				$path = self::normalizePath($this->getRoot() . DIRECTORY_SEPARATOR . $path);
+			} elseif (!$this->isAbsolute && str_starts_with($path, $this->getRoot())) {
+				$path = substr($path, strlen($this->getRoot()));
 			}
 
 			return $this->print = $path;
-		}
+
 	}
 
 	private static string $rootCache;
@@ -156,6 +171,6 @@ class Folder implements Stringable
 
 	final public function __toString(): string
 	{
-		return $this->print;
+		return $this->print();
 	}
 }
