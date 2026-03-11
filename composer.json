@@ -22,9 +22,9 @@
 		"nette/http": "^3.3",
 		"psr/http-message": "^2.0",
 		"phpstan/phpstan": "^2.1",
-		"contributte/qa": "^0.4.0",
 		"codeception/codeception": "^5.3",
-		"codeception/module-asserts": "^3.3"
+		"codeception/module-asserts": "^3.3",
+		"friendsofphp/php-cs-fixer": "^3.94"
 	},
 	"autoload": {
 		"psr-4": {
@@ -46,15 +46,15 @@
 		}
 	},
 	"scripts": {
-		"codesniffer": "vendor/bin/phpcs --standard=ruleset.xml",
-		"codefixer": "vendor/bin/phpcbf --standard=ruleset.xml",
+		"codecheck": "vendor/bin/php-cs-fixer check",
+		"codefix": "vendor/bin/php-cs-fixer fix",
 		"phpstan": "vendor/bin/phpstan analyse --ansi",
 		"tests:build": "vendor/bin/codecept build",
 		"tests:run": "vendor/bin/codecept run"
 	},
 	"scripts-descriptions": {
-		"codesniffer": "Check code style",
-		"codefixer": "Fix code style",
+		"codecheck": "Check code style",
+		"codefix": "Fix code style",
 		"phpstan": "Static code analysis",
 		"tests:build": "Build Codeception actors",
 		"tests:run": "Run Codeception tests"
