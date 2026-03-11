@@ -17,15 +17,6 @@ composer tests:build # Run unit tests
 
 <br>
 
-## Tracy debugging
-Local IDE integration for Nette Tracy is supported via optional config files.
-- `tracy.neon.dist` - template config for editor integrations
-- `tracy.neon` - optional local override (copied from `.dist`)
-
-These files can be used to configure custom Tracy editor mapping.
-
-<br>
-
 ## PHPStan Static analysis
 The project uses PHPStan for static analysis.
 
