@@ -17,15 +17,6 @@ trait Content
 	final protected const int ContentDataPart = 1024;
 
 	/**
-	 * Whole content of file
-	 */
-	protected function getContent(): string {
-			$content = @file_get_contents((string) $this);
-
-			return $content !== false ? $content : throw new RuntimeException(sprintf('Unable to read file "%s".', (string) $this));
-	}
-
-	/**
 	 * Create file from content
 	 *
 	 * @throws RuntimeException
@@ -61,5 +52,15 @@ trait Content
 
 			yield $content;
 		}
+	}
+
+	/**
+	 * Whole content of file
+	 */
+	protected function getContent(): string
+	{
+		$content = @file_get_contents((string) $this);
+
+		return $content !== false ? $content : throw new RuntimeException(sprintf('Unable to read file "%s".', (string) $this));
 	}
 }

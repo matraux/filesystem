@@ -10,24 +10,25 @@ use RuntimeException;
  */
 trait Size
 {
+	final public function count(): int
+	{
+		return $this->size;
+	}
+
 	/**
 	 * @return int<0,max> file size in bytes
 	 * @throws RuntimeException
 	 */
-	final protected function getSize(): int {
-
-			$size = $this->file->getSize();
-
-			if (!is_int($size) || $size < 0) {
-				throw new RuntimeException(sprintf('Unable to get size of file "%s".', (string) $this));
-			}
-
-			return $size;
-
-	}
-
-	final public function count(): int
+	final protected function getSize(): int
 	{
-		return $this->size;
+
+		$size = $this->file->getSize();
+
+		if (!is_int($size) || $size < 0) {
+			throw new RuntimeException(sprintf('Unable to get size of file "%s".', (string) $this));
+		}
+
+		return $size;
+
 	}
 }

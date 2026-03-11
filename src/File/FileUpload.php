@@ -12,16 +12,6 @@ use RuntimeException;
  */
 trait FileUpload
 {
-	protected function getFileUpload(): NetteFileUpload {
-			return new NetteFileUpload([
-				'name' => $this->name,
-				'type' => $this->type,
-				'size' => $this->size,
-				'tmp_name' => (string) $this,
-				'error' => 0,
-			]);
-	}
-
 	/**
 	 * Create file from FileUpload
 	 */
@@ -41,5 +31,16 @@ trait FileUpload
 		}
 
 		return new static($file);
+	}
+
+	protected function getFileUpload(): NetteFileUpload
+	{
+		return new NetteFileUpload([
+			'name' => $this->name,
+			'type' => $this->type,
+			'size' => $this->size,
+			'tmp_name' => (string) $this,
+			'error' => 0,
+		]);
 	}
 }
