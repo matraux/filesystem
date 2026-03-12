@@ -8,7 +8,8 @@ parameters:
 		- %currentWorkingDirectory%/tests
 
 	excludePaths:
-		- %currentWorkingDirectory%/tests/Support
+		analyse:
+			- %currentWorkingDirectory%/tests/Support
 
 	tmpDir:
 		%rootDir%/tmp/phpstan
