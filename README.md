@@ -2,7 +2,7 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/matraux/filesystem.svg?logo=packagist&logoColor=white)](https://packagist.org/packages/matraux/filesystem)
 [![Last release](https://img.shields.io/github/v/release/matraux/filesystem?display_name=tag&logo=github&logoColor=white)](https://github.com/matraux/filesystem/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?logo=open-source-initiative&logoColor=white)](LICENSE)
-[![PHP](https://img.shields.io/badge/PHP-8.4+-blue.svg?logo=php&logoColor=white)](https://php.net)
+[![PHP](https://img.shields.io/badge/PHP-7.4+-blue.svg?logo=php&logoColor=white)](https://php.net)
 [![Security Policy](https://img.shields.io/badge/Security-Policy-blue?logo=bitwarden&logoColor=white)](./.github/SECURITY.md)
 [![Contributing](https://img.shields.io/badge/Contributing-Disabled-lightgrey?logo=github&logoColor=white)](CONTRIBUTING.md)
 [![QA Status](https://img.shields.io/github/actions/workflow/status/matraux/filesystem/qa.yml?label=Quality+Assurance&logo=checkmarx&logoColor=white)](https://github.com/matraux/filesystem/actions/workflows/qa.yml)
@@ -12,7 +12,7 @@
 <br>
 
 ## Introduction
-A PHP 8.4+ library that simplifies file and folder operations using an object-oriented API. Supports renaming, moving, streaming, and deletion with optional integration for PSR-7 and Nette\Http\FileUpload.
+A PHP 7.4+ library that simplifies file and folder operations using an object-oriented API. Supports renaming, moving, streaming, and deletion with optional integration for PSR-7 and Nette\Http\FileUpload.
 
 <br>
 
