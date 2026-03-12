@@ -14,14 +14,14 @@ use Traversable;
  */
 trait Content
 {
-	final protected const int ContentDataPart = 1024;
+	protected static int $contentDataPart = 1024;
 
 	/**
 	 * Create file from content
 	 *
 	 * @throws RuntimeException
 	 */
-	final public static function fromContent(string $content, ?Folder $folder = null): static
+	final public static function fromContent(string $content, ?Folder $folder = null): self
 	{
 		$folder ??= Folder::fromPath(sys_get_temp_dir());
 		$folder = (string) $folder;
@@ -45,7 +45,7 @@ trait Content
 		$this->file->rewind();
 
 		while ($this->file->ftell() !== false && $this->size > $this->file->ftell()) {
-			$content = $this->file->fread(self::ContentDataPart);
+			$content = $this->file->fread(self::$contentDataPart);
 			if ($content === false) {
 				throw new RuntimeException(sprintf('Unable to read from file "%s".', (string) $this));
 			}
@@ -61,6 +61,10 @@ trait Content
 	{
 		$content = @file_get_contents((string) $this);
 
-		return $content !== false ? $content : throw new RuntimeException(sprintf('Unable to read file "%s".', (string) $this));
+		if($content === false) {
+			throw new RuntimeException(sprintf('Unable to read file "%s".', (string) $this));
+		}
+
+		return $content;
 	}
 }

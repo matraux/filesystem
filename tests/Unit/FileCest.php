@@ -5,7 +5,7 @@ namespace Matraux\FileSystem\Test\Unit;
 use Codeception\Configuration;
 use Matraux\FileSystem\File\File;
 use Matraux\FileSystem\Folder\Folder;
-use Matraux\FileSystem\Test\Support\UnitTester;
+use Matraux\FileSystem\Test\UnitTester;
 use Nette\Utils\Random;
 use Nette\Utils\Strings;
 use Throwable;

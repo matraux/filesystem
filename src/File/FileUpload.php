@@ -15,7 +15,7 @@ trait FileUpload
 	/**
 	 * Create file from FileUpload
 	 */
-	final public static function fromFileUpload(NetteFileUpload $fileUpload, ?Folder $folder = null): static
+	final public static function fromFileUpload(NetteFileUpload $fileUpload, ?Folder $folder = null): self
 	{
 		$folder ??= Folder::fromPath(sys_get_temp_dir());
 		$folder = (string) $folder;

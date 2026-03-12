@@ -4,7 +4,7 @@ namespace Matraux\FileSystem\Test\Unit;
 
 use Codeception\Configuration;
 use Matraux\FileSystem\Folder\Folder;
-use Matraux\FileSystem\Test\Support\UnitTester;
+use Matraux\FileSystem\Test\UnitTester;
 use Nette\Utils\FileSystem;
 
 final class FolderCest

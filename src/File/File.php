@@ -7,7 +7,6 @@ use IteratorAggregate;
 use Matraux\FileSystem\Folder\Folder;
 use RuntimeException;
 use SplFileObject;
-use Stringable;
 
 /**
  * @implements IteratorAggregate<int,string>
@@ -20,7 +19,7 @@ use Stringable;
  * @property-read ?string $type File MIME type
  * @property-read ?int $mTime File MTime
  */
-class File implements Stringable, Countable, IteratorAggregate
+class File implements Countable, IteratorAggregate
 {
 	use FileUpload;
 	use Content;
@@ -45,7 +44,7 @@ class File implements Stringable, Countable, IteratorAggregate
 	/**
 	 * Create file from existing file
 	 */
-	final public static function fromPath(string $filepath): static
+	final public static function fromPath(string $filepath): self
 	{
 		return new static($filepath);
 	}
@@ -61,7 +60,7 @@ class File implements Stringable, Countable, IteratorAggregate
 			throw new RuntimeException(sprintf('Unable to delete file "%s". %s', (string) $this, $message));
 		}
 
-		unset($this->file); // @phpstan-ignore-line
+		unset($this->file);
 	}
 
 	final protected function setPath(string $value): void
@@ -162,34 +161,60 @@ class File implements Stringable, Countable, IteratorAggregate
 		$this->file = new SplFileObject($file, 'r');
 	}
 
-	public function __get(string $name): mixed
+	/**
+	 * @return mixed
+	 */
+	public function __get(string $name)
 	{
-		return match ($name) {
-			'path' => $this->getPath(),
-			'relativePath' => $this->getRelativePath(),
-			'webPath' => $this->getWebPath(),
-			'name' => $this->getName(),
-			'basename' => $this->getBasename(),
-			'extension' => $this->getExtension(),
-			'type' => $this->getType(),
-			'mTime' => $this->getMTime(),
-
-			'content' => $this->getContent(),
-			'fileUpload' => $this->getFileUpload(),
-			'size' => $this->getSize(),
-			default => throw new RuntimeException(sprintf('Undefined property $%s', $name)),
-		};
+		switch ($name) {
+			case 'path':
+				return $this->getPath();
+			case 'relativePath':
+				return $this->getRelativePath();
+			case 'webPath':
+				return $this->getWebPath();
+			case 'name':
+				return $this->getName();
+			case 'basename':
+				return $this->getBasename();
+			case 'extension':
+				return $this->getExtension();
+			case 'type':
+				return $this->getType();
+			case 'mTime':
+				return $this->getMTime();
+			case 'content':
+				return $this->getContent();
+			case 'fileUpload':
+				return $this->getFileUpload();
+			case 'size':
+				return $this->getSize();
+			default:
+				throw new RuntimeException(sprintf('Undefined property $%s', $name));
+		}
 	}
 
-	public function __set(string $name, mixed $value): void
+	/**
+	 * @param mixed $value
+	 */
+	public function __set(string $name, $value): void
 	{
-		match ($name) {
-			'path' => $this->setPath($value), // @phpstan-ignore argument.type
-			'name' => $this->setName($value), // @phpstan-ignore argument.type
-			'basename' => $this->setBasename($value), // @phpstan-ignore argument.type
-			'extension' => $this->setExtension($value), // @phpstan-ignore argument.type
-			default => throw new RuntimeException(sprintf('Undefined property $%s', $name)),
-		};
+		switch ($name) {
+			case 'path':
+				$this->setPath($value); // @phpstan-ignore argument.type
+				break;
+			case 'name':
+				$this->setName($value); // @phpstan-ignore argument.type
+				break;
+			case 'basename':
+				$this->setBasename($value); // @phpstan-ignore argument.type
+				break;
+			case 'extension':
+				$this->setExtension($value); // @phpstan-ignore argument.type
+				break;
+			default:
+				throw new RuntimeException(sprintf('Undefined property $%s', $name));
+		}
 	}
 
 	final public function __toString(): string

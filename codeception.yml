@@ -1,5 +1,4 @@
 namespace: Matraux\FileSystem\Test
-support_namespace: Support
 
 paths:
   tests: tests

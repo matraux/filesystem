@@ -11,14 +11,14 @@ use RuntimeException;
  */
 trait Stream
 {
-	final protected const int StreamDataPart = 1024;
+	protected static int $streamDataPart = 1024;
 
 	/**
 	 * Create file from PSR Response
 	 *
 	 * @throws RuntimeException
 	 */
-	final public static function fromStream(StreamInterface $stream, ?Folder $folder = null): static
+	final public static function fromStream(StreamInterface $stream, ?Folder $folder = null): self
 	{
 		$folder ??= Folder::fromPath(sys_get_temp_dir());
 		$folder = (string) $folder;
@@ -30,7 +30,7 @@ trait Stream
 		}
 
 		while (!$stream->eof()) {
-			if (fwrite($handle, $stream->read(self::StreamDataPart)) === false) {
+			if (fwrite($handle, $stream->read(self::$streamDataPart)) === false) {
 				throw new RuntimeException(sprintf('Unable to write file "%s".', $file));
 			}
 		}

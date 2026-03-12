@@ -4,16 +4,15 @@ namespace Matraux\FileSystem\Folder;
 
 use Composer\InstalledVersions;
 use RuntimeException;
-use Stringable;
 
 /**
  * @property-read self $absolute Will be printed as absolute path
  * @property-read self $relative Will be printed as relative path
  * @property-read bool $exists
  */
-class Folder implements Stringable
+class Folder
 {
-	protected const string Root = './';
+	protected const Root = './';
 
 	/**
 	 * Will be printed as absolute path
@@ -44,23 +43,29 @@ class Folder implements Stringable
 		$this->isAbsolute = $isAbsolute;
 	}
 
-	final public static function fromPath(string|Stringable|null $path = self::Root): static
+	/**
+	 * @param string|null $path
+	 */
+	final public static function fromPath(?string $path = self::Root): self
 	{
 		return self::getInstanceCache([(string) $path], false);
 	}
 
-	final public function addPath(string|Stringable $path): static
+	/**
+	 * @param string $path
+	 */
+	final public function addPath($path): self
 	{
 		$paths = $this->paths;
-		$paths[] = (string) $path;
+		$paths[] = $path;
 
 		return self::getInstanceCache($paths, $this->isAbsolute);
 	}
 
-	final public function create(): static
+	final public function create(): self
 	{
 		if (!$this->exists) {
-			if (!@mkdir((string) $this->absolute, recursive: true)) {
+			if (!@mkdir((string) $this->absolute, 0777, true)) {
 				throw new RuntimeException(sprintf('Unable to create directory "%s".', (string) $this->absolute));
 			}
 		}
@@ -71,7 +76,7 @@ class Folder implements Stringable
 	/**
 	 * @param array<int,string> $paths
 	 */
-	final protected static function getInstanceCache(array $paths, bool $isAbsolute): static
+	final protected static function getInstanceCache(array $paths, bool $isAbsolute): self
 	{
 		$index = $isAbsolute . '|' . implode('|', $paths);
 
@@ -139,9 +144,13 @@ class Folder implements Stringable
 		return self::$rootCache = self::normalizePath($root);
 	}
 
+	protected static function str_starts_with(string $haystack, string $needle): bool
+	{
+		return $needle === '' || strncmp($haystack, $needle, strlen($needle)) === 0;
+	}
+
 	protected function print(): string
 	{
-
 		if (isset($this->print)) {
 			return $this->print;
 		}
@@ -149,9 +158,9 @@ class Folder implements Stringable
 		$path = implode(DIRECTORY_SEPARATOR, $this->paths);
 		$path = self::normalizePath($path);
 
-		if ($this->isAbsolute && !str_starts_with($path, $this->getRoot()) && !(bool) preg_match('#([a-z]:)?[/\\\]|[a-z][a-z0-9+.-]*://#Ai', $path)) {
+		if ($this->isAbsolute && !self::str_starts_with($path, $this->getRoot()) && !(bool) preg_match('#([a-z]:)?[/\\\]|[a-z][a-z0-9+.-]*://#Ai', $path)) {
 			$path = self::normalizePath($this->getRoot() . DIRECTORY_SEPARATOR . $path);
-		} elseif (!$this->isAbsolute && str_starts_with($path, $this->getRoot())) {
+		} elseif (!$this->isAbsolute && self::str_starts_with($path, $this->getRoot())) {
 			$path = substr($path, strlen($this->getRoot()));
 		}
 
@@ -159,14 +168,21 @@ class Folder implements Stringable
 
 	}
 
-	public function __get(string $name): mixed
+	/**
+	 * @return mixed
+	 */
+	public function __get(string $name)
 	{
-		return match ($name) {
-			'absolute' => $this->cacheAbsolute ??= self::getInstanceCache($this->paths, true),
-			'relative' => $this->cacheRelative ??= self::getInstanceCache($this->paths, false),
-			'exists' => $this->getExists(),
-			default => throw new RuntimeException(sprintf('Undefined property $%s', $name)),
-		};
+		switch ($name) {
+			case 'absolute':
+				return $this->cacheAbsolute ??= self::getInstanceCache($this->paths, true);
+			case 'relative':
+				return $this->cacheRelative ??= self::getInstanceCache($this->paths, false);
+			case 'exists':
+				return $this->getExists();
+			default:
+				throw new RuntimeException(sprintf('Undefined property $%s', $name));
+		}
 	}
 
 	final public function __toString(): string

@@ -10,8 +10,12 @@ use RuntimeException;
  */
 trait Size
 {
+	/**
+	 * @return int<0,max>
+	 */
 	final public function count(): int
 	{
+		/** @var int<0,max> */
 		return $this->size;
 	}
 
