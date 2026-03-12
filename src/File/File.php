@@ -190,7 +190,7 @@ class File implements Countable, IteratorAggregate
 			case 'size':
 				return $this->getSize();
 			default:
-				throw new RuntimeException(sprintf('Undefined property $%s', $name));
+				throw new RuntimeException(sprintf('Undefined property %s::$%s.', static::class, $name));
 		}
 	}
 
@@ -213,7 +213,7 @@ class File implements Countable, IteratorAggregate
 				$this->setExtension($value); // @phpstan-ignore argument.type
 				break;
 			default:
-				throw new RuntimeException(sprintf('Undefined property $%s', $name));
+				throw new RuntimeException(sprintf('Undefined property %s::$%s.', static::class, $name));
 		}
 	}
 

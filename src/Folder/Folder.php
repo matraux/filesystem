@@ -181,7 +181,7 @@ class Folder
 			case 'exists':
 				return $this->getExists();
 			default:
-				throw new RuntimeException(sprintf('Undefined property $%s', $name));
+				throw new RuntimeException(sprintf('Undefined property %s::$%s.', static::class, $name));
 		}
 	}
 
