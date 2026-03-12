@@ -13,6 +13,7 @@ return (new Config())
 		'blank_line_after_opening_tag' => false,
 		'linebreak_after_opening_tag' => false,
 		'single_blank_line_at_eof' => true,
+		'no_unused_imports' => true,
 		'ordered_class_elements' => [
 			'order' => [
 				'use_trait',
