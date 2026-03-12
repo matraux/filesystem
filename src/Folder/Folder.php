@@ -165,7 +165,7 @@ class Folder implements Stringable
 			'absolute' => $this->cacheAbsolute ??= self::getInstanceCache($this->paths, true),
 			'relative' => $this->cacheRelative ??= self::getInstanceCache($this->paths, false),
 			'exists' => $this->getExists(),
-			default => throw new RuntimeException(sprintf('Undefined property $%s', $name)),
+			default => throw new RuntimeException(sprintf('Undefined property %s::$%s.', static::class, $name)),
 		};
 	}
 

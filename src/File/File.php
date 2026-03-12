@@ -61,7 +61,7 @@ class File implements Stringable, Countable, IteratorAggregate
 			throw new RuntimeException(sprintf('Unable to delete file "%s". %s', (string) $this, $message));
 		}
 
-		unset($this->file); // @phpstan-ignore-line
+		unset($this->file);
 	}
 
 	final protected function setPath(string $value): void
@@ -177,7 +177,7 @@ class File implements Stringable, Countable, IteratorAggregate
 			'content' => $this->getContent(),
 			'fileUpload' => $this->getFileUpload(),
 			'size' => $this->getSize(),
-			default => throw new RuntimeException(sprintf('Undefined property $%s', $name)),
+			default => throw new RuntimeException(sprintf('Undefined property %s::$%s.', static::class, $name)),
 		};
 	}
 
@@ -188,7 +188,7 @@ class File implements Stringable, Countable, IteratorAggregate
 			'name' => $this->setName($value), // @phpstan-ignore argument.type
 			'basename' => $this->setBasename($value), // @phpstan-ignore argument.type
 			'extension' => $this->setExtension($value), // @phpstan-ignore argument.type
-			default => throw new RuntimeException(sprintf('Undefined property $%s', $name)),
+			default => throw new RuntimeException(sprintf('Undefined property %s::$%s.', static::class, $name)),
 		};
 	}
 
