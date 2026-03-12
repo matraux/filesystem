@@ -101,6 +101,11 @@ class Folder
 		return implode(DIRECTORY_SEPARATOR, $result) . DIRECTORY_SEPARATOR;
 	}
 
+	protected static function str_starts_with(string $haystack, string $needle): bool
+	{
+		return $needle === '' || strncmp($haystack, $needle, strlen($needle)) === 0;
+	}
+
 	final protected function getExists(): bool
 	{
 		return is_dir((string) $this->absolute);
@@ -142,11 +147,6 @@ class Folder
 		}
 
 		return self::$rootCache = self::normalizePath($root);
-	}
-
-	protected static function str_starts_with(string $haystack, string $needle): bool
-	{
-		return $needle === '' || strncmp($haystack, $needle, strlen($needle)) === 0;
 	}
 
 	protected function print(): string

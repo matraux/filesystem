@@ -61,7 +61,7 @@ trait Content
 	{
 		$content = @file_get_contents((string) $this);
 
-		if($content === false) {
+		if ($content === false) {
 			throw new RuntimeException(sprintf('Unable to read file "%s".', (string) $this));
 		}
 
