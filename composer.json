@@ -34,10 +34,7 @@
 	"autoload-dev": {
 		"psr-4": {
 			"Matraux\\FileSystem\\Test\\": "tests"
-		},
-		"classmap": [
-			"tests/Support"
-		]
+		}
 	},
 	"support": {
 		"issues": "https://github.com/matraux/filesystem/issues",
