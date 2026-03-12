@@ -3,3 +3,4 @@ vendor
 phpstan.neon
 tests/Support
 .sandbox/*
+.php-cs-fixer.php
