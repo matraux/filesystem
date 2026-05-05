@@ -5,15 +5,39 @@ use PhpCsFixer\Finder;
 
 return (new Config())
 	->setCacheFile(sys_get_temp_dir() . '/.php-cs-fixer.cache')
-	->setRiskyAllowed(false)
+	->setRiskyAllowed(true)
 	->setIndent("\t")
 	->setLineEnding("\n")
 	->setRules([
 		'@PER-CS' => true,
+		'@autoPHPMigration' => true,
 		'blank_line_after_opening_tag' => false,
 		'linebreak_after_opening_tag' => false,
 		'single_blank_line_at_eof' => true,
 		'no_unused_imports' => true,
+		'use_arrow_functions' => true,
+		'ordered_imports' => [
+			'imports_order' => [
+				'class',
+				'function',
+				'const'
+			],
+			'sort_algorithm' => 'alpha',
+		],
+		'single_line_after_imports' => true,
+		'single_import_per_statement' => [
+			'group_to_single_imports' => true,
+		],
+		'fully_qualified_strict_types' => [
+			'import_symbols' => true,
+		],
+		'no_superfluous_phpdoc_tags' => [
+			'allow_hidden_params' => true,
+			'allow_mixed' => true,
+			'remove_inheritdoc' => true,
+		],
+		'no_useless_else' => true,
+		'no_redundant_readonly_property' => true,
 		'ordered_class_elements' => [
 			'order' => [
 				'use_trait',

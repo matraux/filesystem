@@ -40,11 +40,6 @@
 		"issues": "https://github.com/matraux/filesystem/issues",
 		"source": "https://github.com/matraux/filesystem"
 	},
-	"config": {
-		"allow-plugins": {
-			"dealerdirect/phpcodesniffer-composer-installer": true
-		}
-	},
 	"scripts": {
 		"cs:check": "vendor/bin/php-cs-fixer check",
 		"cs:fix": "vendor/bin/php-cs-fixer fix",
