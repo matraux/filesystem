@@ -1,6 +1,7 @@
 composer.lock
 vendor
 phpstan.neon
-tests/Support
-.sandbox/*
+tests/Support/
+.sandbox/
+.vscode/
 .php-cs-fixer.php
