@@ -103,7 +103,6 @@ class Folder implements Stringable
 
 	protected function getRoot(): string
 	{
-
 		if (isset(self::$rootCache)) {
 			return self::$rootCache;
 		}
@@ -141,7 +140,6 @@ class Folder implements Stringable
 
 	protected function print(): string
 	{
-
 		if (isset($this->print)) {
 			return $this->print;
 		}
@@ -156,7 +154,6 @@ class Folder implements Stringable
 		}
 
 		return $this->print = $path;
-
 	}
 
 	public function __get(string $name): mixed

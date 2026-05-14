@@ -21,7 +21,6 @@ trait Size
 	 */
 	final protected function getSize(): int
 	{
-
 		$size = $this->file->getSize();
 
 		if (!is_int($size) || $size < 0) {
@@ -29,6 +28,5 @@ trait Size
 		}
 
 		return $size;
-
 	}
 }

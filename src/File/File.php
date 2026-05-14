@@ -86,7 +86,6 @@ class File implements Stringable, Countable, IteratorAggregate
 
 	final protected function setName(string $value): void
 	{
-
 		$this->rename($this->path . $value);
 	}
 
@@ -97,7 +96,6 @@ class File implements Stringable, Countable, IteratorAggregate
 
 	final protected function setBasename(string $value): void
 	{
-
 		$this->extension !== null ? $this->rename($this->path . $value . '.' . $this->extension) : $this->rename($this->path . $value);
 	}
 
@@ -108,7 +106,6 @@ class File implements Stringable, Countable, IteratorAggregate
 
 	final protected function setExtension(?string $value): void
 	{
-
 		if ($value) {
 			$value = ltrim($value, '.');
 		}
@@ -118,7 +115,6 @@ class File implements Stringable, Countable, IteratorAggregate
 
 	final protected function getExtension(): ?string
 	{
-
 		$extension = $this->file->getExtension();
 
 		return $extension !== '' ? $extension : null;
@@ -173,7 +169,6 @@ class File implements Stringable, Countable, IteratorAggregate
 			'extension' => $this->getExtension(),
 			'type' => $this->getType(),
 			'mTime' => $this->getMTime(),
-
 			'content' => $this->getContent(),
 			'fileUpload' => $this->getFileUpload(),
 			'size' => $this->getSize(),
