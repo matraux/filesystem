@@ -17,7 +17,6 @@ trait Temporary
 			try {
 				$this->delete();
 			} catch (Throwable $th) {
-
 			}
 		}
 	}

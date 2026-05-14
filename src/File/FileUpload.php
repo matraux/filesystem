@@ -37,8 +37,8 @@ trait FileUpload
 			throw new RuntimeException(sprintf('Unable to rename file "%s" to "%s".', $fileUpload->temporaryFile, $file));
 		}
 
-		if (!@chmod($file, 0644)) {
-			throw new RuntimeException(sprintf('Unable to chmod file "%s" to mode %s.', $file, 0644));
+		if (!@chmod($file, 0o644)) {
+			throw new RuntimeException(sprintf('Unable to chmod file "%s" to mode %s.', $file, 0o644));
 		}
 
 		return new static($file);
