@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-use Matraux\PhpCodeStyle\Config;
+use Matraux\PhpCsFixer\Config;
 
 return new Config(
 	__DIR__ . '/src',
