@@ -24,7 +24,7 @@
 		"phpstan/phpstan": "^2.1",
 		"codeception/codeception": "^5.3",
 		"codeception/module-asserts": "^3.3",
-		"matraux/php-cs-fixer-config": "^1.0"
+		"matraux/php-cs-fixer-config": "^2.0"
 	},
 	"autoload": {
 		"psr-4": {
