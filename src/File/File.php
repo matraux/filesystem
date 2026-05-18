@@ -10,11 +10,12 @@ use SplFileObject;
 
 /**
  * @implements IteratorAggregate<int,string>
+ *
  * @property string $path Absolute directory path
  * @property-read string $relativePath Relative directory path
  * @property-read string $webPath Relative directory path for browser
- * @property string $name File name
- * @property string $basename File name without extension
+ * @property string  $name      File name
+ * @property string  $basename  File name without extension
  * @property ?string $extension File extension
  * @property-read ?string $type File MIME type
  * @property-read ?int $mTime File MTime
@@ -85,7 +86,6 @@ class File implements Countable, IteratorAggregate
 
 	final protected function setName(string $value): void
 	{
-
 		$this->rename($this->path . $value);
 	}
 
@@ -96,7 +96,6 @@ class File implements Countable, IteratorAggregate
 
 	final protected function setBasename(string $value): void
 	{
-
 		$this->extension !== null ? $this->rename($this->path . $value . '.' . $this->extension) : $this->rename($this->path . $value);
 	}
 
@@ -107,7 +106,6 @@ class File implements Countable, IteratorAggregate
 
 	final protected function setExtension(?string $value): void
 	{
-
 		if ($value) {
 			$value = ltrim($value, '.');
 		}
@@ -117,7 +115,6 @@ class File implements Countable, IteratorAggregate
 
 	final protected function getExtension(): ?string
 	{
-
 		$extension = $this->file->getExtension();
 
 		return $extension !== '' ? $extension : null;

@@ -43,9 +43,6 @@ class Folder
 		$this->isAbsolute = $isAbsolute;
 	}
 
-	/**
-	 * @param string|null $path
-	 */
 	final public static function fromPath(?string $path = self::Root): self
 	{
 		return self::getInstanceCache([(string) $path], false);
@@ -113,7 +110,6 @@ class Folder
 
 	protected function getRoot(): string
 	{
-
 		if (isset(self::$rootCache)) {
 			return self::$rootCache;
 		}
@@ -165,7 +161,6 @@ class Folder
 		}
 
 		return $this->print = $path;
-
 	}
 
 	/**

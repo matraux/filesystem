@@ -9,7 +9,9 @@ use Traversable;
 
 /**
  * @mixin File
+ *
  * @implements IteratorAggregate<int,string>
+ *
  * @property-read string $content
  */
 trait Content
