@@ -11,11 +11,12 @@ use Stringable;
 
 /**
  * @implements IteratorAggregate<int,string>
+ *
  * @property string $path Absolute directory path
  * @property-read string $relativePath Relative directory path
  * @property-read string $webPath Relative directory path for browser
- * @property string $name File name
- * @property string $basename File name without extension
+ * @property string  $name      File name
+ * @property string  $basename  File name without extension
  * @property ?string $extension File extension
  * @property-read ?string $type File MIME type
  * @property-read ?int $mTime File MTime

@@ -8,6 +8,7 @@ use RuntimeException;
 
 /**
  * @mixin File
+ *
  * @property-read NetteFileUpload $fileUpload
  */
 trait FileUpload
