@@ -9,6 +9,7 @@ use Traversable;
 
 /**
  * @mixin File
+ *
  * @implements IteratorAggregate<int,string>
  */
 trait Content

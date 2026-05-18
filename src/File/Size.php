@@ -11,6 +11,7 @@ trait Size
 {
 	/**
 	 * @var int<0,max> file size in bytes
+	 *
 	 * @throws RuntimeException
 	 */
 	final public int $size {
