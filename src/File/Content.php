@@ -14,7 +14,7 @@ use Traversable;
  */
 trait Content
 {
-	final protected const int ContentDataPart = 1024;
+	private const int ContentDataPart = 1024;
 
 	/**
 	 * Whole content of file

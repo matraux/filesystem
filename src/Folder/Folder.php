@@ -8,7 +8,7 @@ use Stringable;
 
 class Folder implements Stringable
 {
-	protected const string Root = './';
+	private const string Root = './';
 
 	/**
 	 * Will be printed as absolute path
@@ -28,12 +28,17 @@ class Folder implements Stringable
 		get => is_dir((string) $this->absolute);
 	}
 
+	private static string $rootCache;
+
+	/** @var array<string,static> */
+	private static array $instanceCache = [];
+
 	/** @var array<int,string> */
-	final protected array $paths = [];
+	private array $paths = [];
 
-	final protected bool $isAbsolute = false;
+	private bool $isAbsolute = false;
 
-	final protected string $root {
+	private string $root {
 		get {
 			if (isset(self::$rootCache)) {
 				return self::$rootCache;
@@ -71,7 +76,7 @@ class Folder implements Stringable
 		}
 	}
 
-	final protected string $print {
+	private string $print {
 		get {
 			if (isset($this->print)) {
 				return $this->print;
@@ -90,13 +95,8 @@ class Folder implements Stringable
 		}
 	}
 
-	private static string $rootCache;
-
-	/** @var array<string,static> */
-	private static array $instanceCache = [];
-
 	/** @param array<int,string> $paths */
-	final protected function __construct(array $paths = [], bool $isAbsolute = false)
+	final private function __construct(array $paths = [], bool $isAbsolute = false)
 	{
 		$this->paths = $paths;
 		$this->isAbsolute = $isAbsolute;
@@ -129,14 +129,14 @@ class Folder implements Stringable
 	/**
 	 * @param array<int,string> $paths
 	 */
-	final protected static function getInstanceCache(array $paths, bool $isAbsolute): static
+	private static function getInstanceCache(array $paths, bool $isAbsolute): static
 	{
-		$index = $isAbsolute . '|' . implode('|', $paths);
+		$index = implode('|', [static::class, $isAbsolute, ...$paths]);
 
 		return self::$instanceCache[$index] ??= new static($paths, $isAbsolute);
 	}
 
-	final protected static function normalizePath(string $path): string
+	private static function normalizePath(string $path): string
 	{
 		if (!$parts = preg_split('~[/\\\\]+~', $path)) {
 			return DIRECTORY_SEPARATOR;

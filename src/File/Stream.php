@@ -11,7 +11,7 @@ use RuntimeException;
  */
 trait Stream
 {
-	final protected const int StreamDataPart = 1024;
+	private const int StreamDataPart = 1024;
 
 	/**
 	 * Create file from PSR Response

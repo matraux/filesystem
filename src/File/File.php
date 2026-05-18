@@ -109,12 +109,12 @@ class File implements Stringable, Countable, IteratorAggregate
 		}
 	}
 
-	final protected SplFileObject $file;
+	private SplFileObject $file;
 
 	/**
 	 * @throws RuntimeException If can not open file
 	 */
-	final protected function __construct(string $file)
+	final private function __construct(string $file)
 	{
 		if (!is_file($file)) {
 			throw new RuntimeException(sprintf('Failed to open file: No such file "%s".', $file));
@@ -148,7 +148,7 @@ class File implements Stringable, Countable, IteratorAggregate
 	/**
 	 * @throws RuntimeException If can not rename file
 	 */
-	final protected function rename(string $name): void
+	private function rename(string $name): void
 	{
 		if (!@rename((string) $this, $name)) {
 			$message = error_get_last()['message'] ?? null;
