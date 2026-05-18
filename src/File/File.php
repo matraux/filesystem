@@ -28,12 +28,12 @@ class File implements Countable, IteratorAggregate
 	use Temporary;
 	use Stream;
 
-	protected SplFileObject $file;
+	private SplFileObject $file;
 
 	/**
 	 * @throws RuntimeException If can not open file
 	 */
-	final protected function __construct(string $file)
+	final private function __construct(string $file)
 	{
 		if (!is_file($file)) {
 			throw new RuntimeException(sprintf('Failed to open file: No such file "%s".', $file));
@@ -64,47 +64,47 @@ class File implements Countable, IteratorAggregate
 		unset($this->file);
 	}
 
-	final protected function setPath(string $value): void
+	private function setPath(string $value): void
 	{
 		$this->rename(Folder::fromPath($value) . $this->name);
 	}
 
-	final protected function getPath(): string
+	private function getPath(): string
 	{
 		return $this->file->getPath() . DIRECTORY_SEPARATOR;
 	}
 
-	final protected function getRelativePath(): string
+	private function getRelativePath(): string
 	{
 		return (string) Folder::fromPath($this->path)->relative;
 	}
 
-	final protected function getWebPath(): string
+	private function getWebPath(): string
 	{
 		return (string) preg_replace('~\\\\~', '/', $this->relativePath);
 	}
 
-	final protected function setName(string $value): void
+	private function setName(string $value): void
 	{
 		$this->rename($this->path . $value);
 	}
 
-	final protected function getName(): string
+	private function getName(): string
 	{
 		return $this->file->getFilename();
 	}
 
-	final protected function setBasename(string $value): void
+	private function setBasename(string $value): void
 	{
 		$this->extension !== null ? $this->rename($this->path . $value . '.' . $this->extension) : $this->rename($this->path . $value);
 	}
 
-	final protected function getBasename(): string
+	private function getBasename(): string
 	{
 		return $this->extension !== null ? $this->file->getBasename('.' . $this->extension) : $this->file->getBasename();
 	}
 
-	final protected function setExtension(?string $value): void
+	private function setExtension(?string $value): void
 	{
 		if ($value) {
 			$value = ltrim($value, '.');
@@ -113,14 +113,14 @@ class File implements Countable, IteratorAggregate
 		$this->name = $value === null || $value === '' ? $this->basename : $this->basename . '.' . $value;
 	}
 
-	final protected function getExtension(): ?string
+	private function getExtension(): ?string
 	{
 		$extension = $this->file->getExtension();
 
 		return $extension !== '' ? $extension : null;
 	}
 
-	final protected function getType(): ?string
+	private function getType(): ?string
 	{
 		if (!$finfo = finfo_open(FILEINFO_MIME_TYPE)) {
 			return null;
@@ -132,7 +132,7 @@ class File implements Countable, IteratorAggregate
 		return $type ?: null;
 	}
 
-	final protected function getMTime(): ?int
+	private function getMTime(): ?int
 	{
 		$mTime = $this->file->getMTime();
 
@@ -142,7 +142,7 @@ class File implements Countable, IteratorAggregate
 	/**
 	 * @throws RuntimeException If can not rename file
 	 */
-	final protected function rename(string $name): void
+	private function rename(string $name): void
 	{
 		if (!@rename((string) $this, $name)) {
 			$message = error_get_last()['message'] ?? null;

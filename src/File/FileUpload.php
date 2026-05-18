@@ -34,7 +34,7 @@ trait FileUpload
 		return new static($file);
 	}
 
-	protected function getFileUpload(): NetteFileUpload
+	private function getFileUpload(): NetteFileUpload
 	{
 		return new NetteFileUpload([
 			'name' => $this->name,

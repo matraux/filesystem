@@ -11,7 +11,7 @@ use RuntimeException;
  */
 trait Stream
 {
-	protected static int $streamDataPart = 1024;
+	private static int $streamDataPart = 1024;
 
 	/**
 	 * Create file from PSR Response

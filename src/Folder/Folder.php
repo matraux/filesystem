@@ -12,32 +12,32 @@ use RuntimeException;
  */
 class Folder
 {
-	protected const Root = './';
-
-	/**
-	 * Will be printed as absolute path
-	 */
-	protected self $cacheAbsolute;
-
-	/**
-	 * Will be printed as relative path
-	 */
-	protected self $cacheRelative;
-
-	/** @var array<int,string> */
-	protected array $paths = [];
-
-	protected bool $isAbsolute = false;
-
-	protected string $print;
+	private const Root = './';
 
 	private static string $rootCache;
 
 	/** @var array<string,static> */
 	private static array $instanceCache = [];
 
+	/**
+	 * Will be printed as absolute path
+	 */
+	private self $cacheAbsolute;
+
+	/**
+	 * Will be printed as relative path
+	 */
+	private self $cacheRelative;
+
+	/** @var array<int,string> */
+	private array $paths = [];
+
+	private bool $isAbsolute = false;
+
+	private string $print;
+
 	/** @param array<int,string> $paths */
-	final protected function __construct(array $paths = [], bool $isAbsolute = false)
+	final private function __construct(array $paths = [], bool $isAbsolute = false)
 	{
 		$this->paths = $paths;
 		$this->isAbsolute = $isAbsolute;
@@ -73,14 +73,14 @@ class Folder
 	/**
 	 * @param array<int,string> $paths
 	 */
-	final protected static function getInstanceCache(array $paths, bool $isAbsolute): self
+	private static function getInstanceCache(array $paths, bool $isAbsolute): self
 	{
-		$index = $isAbsolute . '|' . implode('|', $paths);
+		$index = implode('|', [static::class, $isAbsolute, ...$paths]);
 
 		return self::$instanceCache[$index] ??= new static($paths, $isAbsolute);
 	}
 
-	final protected static function normalizePath(string $path): string
+	private static function normalizePath(string $path): string
 	{
 		if (!$parts = preg_split('~[/\\\\]+~', $path)) {
 			return DIRECTORY_SEPARATOR;
@@ -98,17 +98,17 @@ class Folder
 		return implode(DIRECTORY_SEPARATOR, $result) . DIRECTORY_SEPARATOR;
 	}
 
-	protected static function str_starts_with(string $haystack, string $needle): bool
+	private static function str_starts_with(string $haystack, string $needle): bool
 	{
 		return $needle === '' || strncmp($haystack, $needle, strlen($needle)) === 0;
 	}
 
-	final protected function getExists(): bool
+	private function getExists(): bool
 	{
 		return is_dir((string) $this->absolute);
 	}
 
-	protected function getRoot(): string
+	private function getRoot(): string
 	{
 		if (isset(self::$rootCache)) {
 			return self::$rootCache;
@@ -145,7 +145,7 @@ class Folder
 		return self::$rootCache = self::normalizePath($root);
 	}
 
-	protected function print(): string
+	private function print(): string
 	{
 		if (isset($this->print)) {
 			return $this->print;

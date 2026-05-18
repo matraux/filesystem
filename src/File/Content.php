@@ -16,7 +16,7 @@ use Traversable;
  */
 trait Content
 {
-	protected static int $contentDataPart = 1024;
+	private static int $contentDataPart = 1024;
 
 	/**
 	 * Create file from content
@@ -59,7 +59,7 @@ trait Content
 	/**
 	 * Whole content of file
 	 */
-	protected function getContent(): string
+	private function getContent(): string
 	{
 		$content = @file_get_contents((string) $this);
 

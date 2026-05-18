@@ -25,7 +25,7 @@ trait Size
 	 *
 	 * @throws RuntimeException
 	 */
-	final protected function getSize(): int
+	private function getSize(): int
 	{
 		$size = $this->file->getSize();
 
