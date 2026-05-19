@@ -1,10 +1,13 @@
 # Contributing
+
 Thanks for your interest!
 
-This project does not accept pull requests directly.
+This project does not accept external pull requests.
 
-If you found a bug or would like to suggest a new feature, please open an [issue](https://github.com/matraux/filesystem/issues) with a clear description and steps to reproduce (if applicable).
+Bug reports, feature requests, and other project-related feedback are welcome through GitHub issues.
 
-All changes to the codebase are made internally. External contributions via PR are not accepted.
+When reporting a bug, please include a clear description and reproduction steps if applicable.
+
+All changes to the codebase are made internally.
 
 Thank you for your understanding.
