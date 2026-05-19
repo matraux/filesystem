@@ -2,8 +2,9 @@ name: Quality Assurance
 
 on:
   push:
-    branches:
-      - master
+
+env:
+  PHP_VERSION: '8.4'
 
 jobs:
   codecheck:
@@ -16,7 +17,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.4'
+          php-version: ${{ env.PHP_VERSION }}
           tools: composer
 
       - name: Run Composer
@@ -35,7 +36,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.4'
+          php-version: ${{ env.PHP_VERSION }}
           tools: composer
 
       - name: Run Composer
@@ -57,7 +58,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.4'
+          php-version: ${{ env.PHP_VERSION }}
           tools: composer
 
       - name: Run Composer
