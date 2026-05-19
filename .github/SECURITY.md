@@ -1,9 +1,11 @@
 # Security Policy
 
-
 ## Supported Versions
-Only the latest released version is actively supported. Older versions are not maintained.
 
+Security reports are accepted for all maintained versions of this package.
 
 ## Reporting a Vulnerability
-If you discover a security vulnerability, please [open an issue](https://github.com/matraux/filesystem/issues).
+
+If you discover a security vulnerability, please open a GitHub issue in this repository.
+
+Please include the affected package version, PHP version, a clear description, and reproduction steps if possible.
