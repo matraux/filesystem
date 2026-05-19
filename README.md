@@ -1,6 +1,5 @@
 # MATRAUX File System
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/matraux/filesystem.svg?logo=packagist&logoColor=white)](https://packagist.org/packages/matraux/filesystem)
-[![Last release](https://img.shields.io/github/v/release/matraux/filesystem?display_name=tag&logo=github&logoColor=white)](https://github.com/matraux/filesystem/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?logo=open-source-initiative&logoColor=white)](LICENSE)
 [![PHP](https://img.shields.io/badge/PHP-7.4+-blue.svg?logo=php&logoColor=white)](https://php.net)
 [![Security Policy](https://img.shields.io/badge/Security-Policy-blue?logo=bitwarden&logoColor=white)](./.github/SECURITY.md)
@@ -34,10 +33,13 @@ composer require matraux/filesystem
 
 <br>
 
-## Requirements
-| version | PHP | Note
-|----|---|---
-| 1.0.0 | 7.4+ | Support PHP 7.4
+## PHP compatibility
+
+This package provides separate major versions for different PHP baselines.
+
+| Version | PHP |
+| ---- | ---: |
+| 1.x | 7.4+ |
 
 <br>
 
